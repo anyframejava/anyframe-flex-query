@@ -8,7 +8,7 @@
     <groupId>org.anyframe.plugin</groupId>
     <artifactId>anyframe-flex-query-pi</artifactId>
     <packaging>war</packaging>
-    <version>1.6.0</version>
+    <version>1.6.1-SNAPSHOT</version>
     <name>anyframe-flex-query-pi</name>
     
     <dependencies>
@@ -30,7 +30,7 @@
         <dependency>
             <groupId>org.anyframe</groupId>
             <artifactId>anyframe-core</artifactId>
-            <version>1.6.0</version>
+            <version>1.6.1-SNAPSHOT</version>
         </dependency>
         <dependency>
             <groupId>javax.servlet</groupId>
@@ -212,7 +212,7 @@
         <dependency>
             <groupId>org.anyframe</groupId>
             <artifactId>anyframe-query</artifactId>
-            <version>1.6.0</version>
+            <version>1.6.1-SNAPSHOT</version>
         </dependency>
         <dependency>
             <groupId>org.apache.velocity</groupId>
@@ -313,7 +313,7 @@
 		<dependency>
             <groupId>org.anyframe</groupId>
             <artifactId>anyframe-flex-query</artifactId>
-            <version>1.6.0</version>
+            <version>1.6.1-SNAPSHOT</version>
         </dependency>
 		<!-- Anyframe Flex Query Plugin END -->
     </dependencies>
@@ -365,7 +365,7 @@
             <plugin>
                 <groupId>org.codehaus.mojo</groupId>
                 <artifactId>anyframe-maven-plugin</artifactId>
-                <version>2.3.0</version>
+                <version>2.3.1-SNAPSHOT</version>
                 <dependencies>
                     <dependency>
                         <groupId>hsqldb</groupId>
