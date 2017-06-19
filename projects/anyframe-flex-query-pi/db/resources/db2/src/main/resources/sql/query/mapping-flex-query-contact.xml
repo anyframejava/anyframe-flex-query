@@ -3,7 +3,7 @@
 				<!--Velocity-Support-dynamicFindFlexQueryContactList-START-->
 				#if($firstName)
 				WHERE
-				first_name like %' CONCAT :firstName %' CONCAT	
+				first_name like '%' CONCAT :firstName CONCAT '%'
 				#end
 				<!--Velocity-Support-dynamicFindFlexQueryContactList-END-->
 				ORDER BY first_name
@@ -13,7 +13,7 @@
 				<!--Velocity-Support-dynamicFindFlexQueryContractListResultClass-START-->
 				#if($first_name)
 				WHERE
-				first_name like %' CONCAT :firstName %' CONCAT	
+				first_name like '%' CONCAT :firstName CONCAT '%'
 				#end
 				<!--Velocity-Support-dynamicFindFlexQueryContractListResultClass-END-->
 				ORDER BY first_name
@@ -24,5 +24,5 @@
 				FLEX_CONTACT
 				(CONTACT_ID, FIRST_NAME, LAST_NAME, ADDRESS, CITY, STATE, ZIP, PHONE, EMAIL) 
 				VALUES
-				('CONTACT-' CONCAT NEXT VALUE FOR FLEX_CONTACT_ID_SEQ, :firstName, :lastName, :address, :city, :state, :zip, :phone, :email)
+				(NEXT VALUE FOR FLEX_CONTACT_ID_SEQ, :firstName, :lastName, :address, :city, :state, :zip, :phone, :email)
 				<!--flex-query-createFlexQueryContact-END-->

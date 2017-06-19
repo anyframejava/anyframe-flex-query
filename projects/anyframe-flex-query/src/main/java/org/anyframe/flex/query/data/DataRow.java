@@ -1,5 +1,5 @@
 /*
- * Copyright 2002-2009 the original author or authors.
+ * Copyright 2002-2012 the original author or authors.
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -25,17 +25,18 @@ import flex.messaging.io.ObjectProxy;
 
 public class DataRow extends ObjectProxy implements Externalizable {
 
-	public String ROWTYPE;
+	public String rowType;
 
 	public DataRow() {
 	}
 
+	@SuppressWarnings("unchecked")
 	public DataRow(Map map) {
 		this.putAll(map);
 	}
 
 	public DataRow(int initialCapacity) {
-		super(initialCapacity);
+		super(initialCapacity); 
 	}
 
 	public DataRow(int initialCapacity, float loadFactor) {
@@ -44,12 +45,12 @@ public class DataRow extends ObjectProxy implements Externalizable {
 
 	public void readExternal(ObjectInput in) throws IOException,
 			ClassNotFoundException {
-		this.ROWTYPE = (String) in.readObject();
+		this.rowType = (String) in.readObject();
 		super.readExternal(in);
 	}
 
 	public void writeExternal(ObjectOutput out) throws IOException {
-		out.writeObject(this.ROWTYPE);
+		out.writeObject(this.rowType);
 		super.writeExternal(out);
 	}
 }

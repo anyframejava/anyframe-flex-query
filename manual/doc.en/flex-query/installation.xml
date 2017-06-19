@@ -103,12 +103,7 @@
 				BlazeDS to {Web Root folder}/WEB-INF/lib folder of Web Application
 				Project.
 				Before copying them, make sure it does not conflict with
-				library in Web Application.
-				For example, Web Application created
-				through installing Anyframe Core Plugin includes
-				common-logging-1.1.1.jar,
-				therefore exclude common-logging.jar before
-				copying.			
+				library in Web Application.			
 			</para>
 		</section>
 	</section>
@@ -215,7 +210,7 @@
 	xmlns:flex="http://www.springframework.org/schema/flex"
 	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
 	xsi:schemaLocation="http://www.springframework.org/schema/beans 
-	http://www.springframework.org/schema/beans/spring-beans-3.0.xsd
+	http://www.springframework.org/schema/beans/spring-beans-3.1.xsd
 	http://www.springframework.org/schema/flex 
 	http://www.springframework.org/schema/flex/spring-flex-1.0.xsd">
 	

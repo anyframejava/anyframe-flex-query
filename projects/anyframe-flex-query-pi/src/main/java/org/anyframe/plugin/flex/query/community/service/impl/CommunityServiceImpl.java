@@ -1,5 +1,5 @@
 /*
- * Copyright 2002-2009 the original author or authors.
+ * Copyright 2002-2012 the original author or authors.
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -15,7 +15,6 @@
  */
 package org.anyframe.plugin.flex.query.community.service.impl;
 
-import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 
@@ -39,6 +38,7 @@ public class CommunityServiceImpl implements CommunityService{
 	@Inject
 	@Named("communityDao")
 	private CommunityDao  communityDao;
+	
 	public Page getPagingList(SearchVO searchVO) throws Exception {
 		return communityDao.getPagingList(searchVO);
 	}
@@ -55,11 +55,11 @@ public class CommunityServiceImpl implements CommunityService{
 		return communityDao.remove(community);
 	}
 
-	public Map saveAll(ArrayList arrayList) throws Exception {
-		return communityDao.saveAll(arrayList);
+	public Map<String, Integer> saveAll(List<Community> list) throws Exception {
+		return communityDao.saveAll(list);
 	}
 
-	public List getList(SearchVO searchVO) throws Exception {
+	public List<Community> getList(SearchVO searchVO) throws Exception {
 		return communityDao.getList(searchVO);
 	}
 

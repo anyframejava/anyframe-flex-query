@@ -1,5 +1,5 @@
 /*
- * Copyright 2002-2009 the original author or authors.
+ * Copyright 2002-2012 the original author or authors.
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -15,7 +15,6 @@
  */
 package org.anyframe.plugin.flex.query.community.service.impl;
 
-import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -26,73 +25,76 @@ import org.anyframe.pagination.Page;
 import org.anyframe.plugin.flex.query.domain.Community;
 import org.anyframe.plugin.flex.query.domain.SearchVO;
 import org.anyframe.query.QueryService;
-import org.anyframe.query.dao.AbstractDao;
+import org.anyframe.query.dao.QueryServiceDaoSupport;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Repository;
 
 @Repository("communityDao")
-public class CommunityDao extends AbstractDao{
-	
-	@Inject
-	public void setQueryService(QueryService queryService) {
-		super.setQueryService(queryService);
-		super.setCreateId("flex.create");
-		super.setUpdateId("flex.update");
-		super.setRemoveId("flex.remove");
-		super.setFindPrefix("flex.find");
-	}
-	
-	
+public class CommunityDao extends QueryServiceDaoSupport {
+
+	//Velocity-Support-contextProperties-START
 	@Value("#{contextProperties['pageSize'] ?: 10}")
 	int pageSize;
 
 	@Value("#{contextProperties['pageUnit'] ?: 10}")
 	int pageUnit;
+	//Velocity-Support-contextProperties-END
 
-	public int create(Community community) throws Exception {
-		return create("Community", community);
+	@Inject
+	public void setQueryService(QueryService queryService) {
+		super.setQueryService(queryService);
 	}
 
-	public List getList(SearchVO searchVO) throws Exception {
-        
-        return (List) this.findList(searchVO.getTableName(), searchVO);
+	public int create(Community community) {
+		return super.create("flex.createCommunity", community);
 	}
 
-	public Page getPagingList(SearchVO searchVO) throws Exception {
+	public List<Community> getList(SearchVO searchVO) {
+		return super.findList("flex.findCommunityList", searchVO);
+	}
+
+	public Page getPagingList(SearchVO searchVO) {
 		int pageIndex = searchVO.getPageIndex();
-
-		return this.findListWithPaging(searchVO.getTableName(), searchVO,
+		return super.findListWithPaging("flex.findCommunityList", searchVO,
 				pageIndex, pageSize, pageUnit);
 	}
 
-	public int remove(Community community) throws Exception {
-		return remove("Community", community);
+	public int remove(Community community) {
+		return super.remove("flex.removeCommunity", community);
 	}
 
-	public Map saveAll(ArrayList arrayList) throws Exception {
+	public Map<String, Integer> saveAll(List<Community> list) {
 		Map<String, Integer> resultCount = new HashMap<String, Integer>();
-		
+
 		int createRowCount = 0;
 		int updateRowCount = 0;
 		int removeRowCount = 0;
-		
-		for ( int i = 0 ; i < arrayList.size() ; i ++ ){
-			Community community = (Community) arrayList.get(i);
+
+		for (int i = 0; i < list.size(); i++) {
+			Community community = list.get(i);
 			int status = community.getStatus();
-			
-			switch(status){
-				case Community.INSERT_ROW : createRowCount = createRowCount + this.create(community); break;
-				case Community.UPDATE_ROW : updateRowCount = updateRowCount + this.update(community); break;
-				case Community.DELETE_ROW : removeRowCount = removeRowCount + this.remove(community); break;
+
+			switch (status) {
+			case Community.INSERT_ROW:
+				createRowCount = createRowCount + this.create(community);
+				break;
+			case Community.UPDATE_ROW:
+				updateRowCount = updateRowCount + this.update(community);
+				break;
+			case Community.DELETE_ROW:
+				removeRowCount = removeRowCount + this.remove(community);
+				break;
 			}
 		}
-		resultCount.put("INSERT", createRowCount );
-		resultCount.put("UPDATE", updateRowCount );
-		resultCount.put("DELETE", removeRowCount );
+		resultCount.put("INSERT", createRowCount);
+		resultCount.put("UPDATE", updateRowCount);
+		resultCount.put("DELETE", removeRowCount);
+
 		return resultCount;
 	}
 
-	public int update(Community community) throws Exception {
-		return update("Community", community);
+	public int update(Community community) {
+		return super.update("flex.updateCommunity", community);
 	}
+
 }

@@ -1,5 +1,5 @@
 /*
- * Copyright 2008-2011 the original author or authors.
+ * Copyright 2008-2012 the original author or authors.
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -15,7 +15,6 @@
  */
 package org.anyframe.plugin.flex.query.dept.service;
 
-import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 
@@ -35,7 +34,8 @@ public interface DeptService {
 
 	int remove(Dept dept) throws Exception;
 
-	Map saveAll(ArrayList arrayList) throws Exception;
+	Map<String, Integer> saveAll(List<Dept> list) throws Exception;
 	
-	List getList(SearchVO searchVO) throws Exception;
+	List<Dept> getList(SearchVO searchVO) throws Exception;
+	
 }

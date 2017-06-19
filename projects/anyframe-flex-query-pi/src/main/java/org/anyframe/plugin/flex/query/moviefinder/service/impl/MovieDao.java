@@ -1,5 +1,5 @@
 /*
- * Copyright 2008-2011 the original author or authors.
+ * Copyright 2008-2012 the original author or authors.
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -21,7 +21,7 @@ import javax.inject.Inject;
 
 import org.anyframe.plugin.flex.query.domain.Movie;
 import org.anyframe.query.QueryService;
-import org.anyframe.query.dao.AbstractDao;
+import org.anyframe.query.dao.QueryServiceDaoSupport;
 import org.springframework.stereotype.Repository;
 
 /**
@@ -30,35 +30,36 @@ import org.springframework.stereotype.Repository;
  * @author Jonghoon Kim
  */
 @Repository("flexQueryMovieDao")
-public class MovieDao extends AbstractDao {
+public class MovieDao extends QueryServiceDaoSupport {
 
 	@Inject
 	public void setQueryService(QueryService queryService) {
 		super.setQueryService(queryService);
 	}
 
-	public void create(Movie movie) throws Exception {
+	public void create(Movie movie) {
 		movie.setMovieId("MV-" + System.currentTimeMillis());
-		create("FlexQueryMovie", movie);
+		super.create("createFlexQueryMovie", movie);
 	}
 
-	public void remove(String movieId) throws Exception {
+	public void remove(String movieId) {
 		Movie movie = new Movie();
 		movie.setMovieId(movieId);
-		remove("FlexQueryMovie", movie);
+		super.remove("removeFlexQueryMovie", movie);
 	}
 
-	public void update(Movie movie) throws Exception {
-		update("FlexQueryMovie", movie);
+	public void update(Movie movie) {
+		super.update("updateFlexQueryMovie", movie);
 	}
 
-	public Movie get(String movieId) throws Exception {
+	public Movie get(String movieId) {
 		Movie movie = new Movie();
 		movie.setMovieId(movieId);
-		return (Movie) findByPk("FlexQueryMovie", movie);
+		return super.findByPk("findFlexQueryMovieByPk", movie);
 	}
 
-	public List getList(Movie movie) throws Exception {
-		return (List) this.findList("FlexQueryMovie", movie);
+	public List<Movie> getList(Movie movie) {
+		return super.findList("findFlexQueryMovieList", movie);
 	}
+
 }
