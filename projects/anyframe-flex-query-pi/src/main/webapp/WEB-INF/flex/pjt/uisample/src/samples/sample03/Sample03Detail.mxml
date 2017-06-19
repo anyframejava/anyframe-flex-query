@@ -1,8 +1,18 @@
 <?xml version="1.0" encoding="utf-8"?>
-<mx:TitleWindow xmlns:mx="http://www.adobe.com/2006/mxml" layout="absolute" width="378" height="246" xmlns:brd="anyframe.samples.domain.*" showCloseButton="true" 
-	close="PopUpManager.removePopUp(this)" creationComplete="create()" title="게시글"
-	verticalScrollPolicy="off" horizontalScrollPolicy="off">
-	<mx:Script>
+<mx:TitleWindow xmlns:fx="http://ns.adobe.com/mxml/2009" 
+				xmlns:s="library://ns.adobe.com/flex/spark" 
+				xmlns:mx="library://ns.adobe.com/flex/mx"
+				xmlns:brd="anyframe.samples.domain.*"
+				layout="vertical" 
+				width="378" height="270" 
+				showCloseButton="true"
+				close="PopUpManager.removePopUp(this)" 
+				creationComplete="create()" 
+				title="게시글" color="#FFFFFF"
+				verticalScrollPolicy="off" 
+				titleBackgroundSkin="@Embed('../../assets/images/bg_title.png')" 
+				horizontalScrollPolicy="off">
+	<fx:Script>
 		<![CDATA[
 			import mx.controls.List;
 			import mx.events.FlexEvent;
@@ -50,40 +60,34 @@
 			}
 			
 		]]>
-	</mx:Script>
-	
-	<mx:states>
-		<mx:State name="updateMode">
-			<mx:SetProperty target="{btnCancel}" name="visible" value="true"/>
-		</mx:State>
-		<mx:State name="createMode">
-			<mx:SetProperty target="{btnCancel}" name="visible" value="false"/>
-		</mx:State>
-	</mx:states>
+	</fx:Script>
 
-	<mx:Form id="boardDetailForm" width="370" height="184" y="27" verticalScrollPolicy="off" horizontalScrollPolicy="off">
+	<mx:Form id="boardDetailForm" width="370" color="#000000" horizontalScrollPolicy="off"
+			 paddingBottom="10" paddingLeft="10" paddingRight="10" paddingTop="10"
+			 verticalScrollPolicy="off">
 		<mx:FormItem label="게시글 ID">
-			<mx:TextInput id="postId" text="{board.postId}" width="202" editable="false"/> 
+			<mx:TextInput id="postId" text="{board.postId}" width="276" editable="false"/> 
 		</mx:FormItem>
 	
 		<mx:FormItem label="제목">
-			<mx:TextInput id="boardTitle" text="{board.title}" width="273"/> 
+			<mx:TextInput id="boardTitle" text="{board.title}" width="276"/> 
 		</mx:FormItem>
 		
 		<mx:FormItem label="내용">
-			<mx:TextArea id="contents" text="{board.contents}" width="278" height="90%"/>   
+			<mx:TextArea id="contents" text="{board.contents}" width="276" height="90%"/>   
 		</mx:FormItem>
 		
 		<mx:FormItem label="등록자">
 			<mx:TextInput id="regId" text="{board.regId}" width="276" editable="false"/> 
 		</mx:FormItem>
 		
-		 <mx:FormItem label="커뮤니티">
-	              <mx:ComboBox id="comboCommumity" text="{board.communityName}" editable="false" dataProvider="{communityList}" labelField="communityName" change="comboChange(event)"  width="217"/>
-	      </mx:FormItem>
+		<mx:FormItem label="커뮤니티">
+	    	<mx:ComboBox id="comboCommumity" text="{board.communityName}" editable="false" 
+						 dataProvider="{communityList}" labelField="communityName" change="comboChange(event)"  width="217"/>
+	    </mx:FormItem>
 	</mx:Form>
-	 <mx:ControlBar horizontalAlign="center">
-        <mx:Button label="확인" click="confirm()"/>
-        <mx:Button id="btnCancel" label="취소" click="cancel()"/>
+	<mx:ControlBar horizontalAlign="center" color="#000000">
+		<mx:Button label="확인" click="confirm()"/>
+		<mx:Button id="btnCancel" label="취소" click="cancel()"/>
     </mx:ControlBar>
 </mx:TitleWindow>

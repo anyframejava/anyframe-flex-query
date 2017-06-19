@@ -1,8 +1,12 @@
 <?xml version="1.0" encoding="utf-8"?>
-<mx:Application xmlns:mx="http://www.adobe.com/2006/mxml" layout="vertical" xmlns:data="org.anyframe.flex.messaging.data.*"
+<s:Application xmlns:fx="http://ns.adobe.com/mxml/2009" 
+			   xmlns:s="library://ns.adobe.com/flex/spark" 
+			   xmlns:mx="library://ns.adobe.com/flex/mx" 
+			   xmlns:data="org.anyframe.flex.messaging.data.*"
+			   xmlns:local="*"
+			   minWidth="955" minHeight="600"
 			   applicationComplete="init()">
-
-	<mx:Script>
+	<fx:Script>
 		<![CDATA[
 			import mx.collections.ArrayCollection;
 			import mx.controls.Alert;
@@ -84,20 +88,26 @@
 				tn.removeChild(event.target as CompanyForm);
 				search();				
 			}
-			
 		]]>
-	</mx:Script>
+	</fx:Script>
 	
-	<data:DataService id="roCompany"/>
-	<data:DataService id="roIndustry"/>
-
+	<fx:Declarations>
+		<!-- Place non-visual elements (e.g., services, value objects) here -->
+		<data:DataService id="roCompany"/>
+		<data:DataService id="roIndustry"/>
+	</fx:Declarations>
+	
+	<s:layout>
+		<s:VerticalLayout gap="0" horizontalAlign="center"/>
+	</s:layout>
+	
 	<mx:ApplicationControlBar width="100%">
 		<mx:TextInput id="searchStr"/>
 		<mx:Button label="Search" click="search()"/>
 		<mx:Button label="New Company" click="openCompany(new DataRow)"/>
 	</mx:ApplicationControlBar>
 	
-
+	
 	<mx:HDividedBox width="100%" height="100%">
 		<mx:DataGrid id="dg" dataProvider="{dsCompany}" width="30%" height="100%"
 					 doubleClickEnabled="true" 
@@ -109,4 +119,4 @@
 		</mx:DataGrid>
 		<mx:TabNavigator id="tn" width="70%" height="100%"/>
 	</mx:HDividedBox>
-</mx:Application>
+</s:Application>

@@ -1,6 +1,14 @@
 <?xml version="1.0" encoding="utf-8"?>
-<mx:Module xmlns:mx="http://www.adobe.com/2006/mxml" layout="absolute" width="686" height="383" initialize="init()" xmlns:category="samples.category.*">
-	<mx:Script>
+<mx:Module xmlns:fx="http://ns.adobe.com/mxml/2009"
+		   xmlns:s="library://ns.adobe.com/flex/spark"
+		   xmlns:mx="library://ns.adobe.com/flex/mx"
+		   xmlns:category="samples.category.*"
+		   width="100%" height="100%" 
+		   currentState="CATEGORY" 
+		   initialize="init()" 
+		   layout="vertical">
+	
+	<fx:Script>
 		<![CDATA[
 			import samples.domain.Community;
 			import flash.utils.getQualifiedClassName;
@@ -56,7 +64,7 @@
 						if ( flag ) break;
 					}
 					if ( !flag ){
-						Alert.show("부서를 찾을 수 없습니다.")
+						Alert.show("커뮤니티를 찾을 수 없습니다.")
 					}
 				}
 			}
@@ -101,71 +109,76 @@
 				Alert.show("저장하였습니다.");
 			}
 			]]>
-	</mx:Script>
-	<mx:RemoteObject id="categoryService" destination="categoryService" showBusyCursor="true">
-		<mx:method name="getTree" result="getCategoryTreeResultHandler(event)" fault="ResultHandler.faultMessage(event)"/>
-		<mx:method name="getList" fault="ResultHandler.faultMessage(event)"/>
-	</mx:RemoteObject> 
-	<mx:RemoteObject id="communityService" destination="communityService" showBusyCursor="true">
-		<mx:method name="getList" fault="ResultHandler.faultMessage(event)"/>
-		<mx:method name="saveAll" fault="ResultHandler.faultMessage(event)" result="saveAllResultHandler(event)"/>
-	</mx:RemoteObject>
+	</fx:Script>
 	<mx:states>
-		<mx:State name="CATEGORY">
-			<mx:AddChild relativeTo="{categoryView}"/>
-			<mx:RemoveChild target="{communityView}"/>
-			<mx:SetProperty target="{categoryView}" name="width" value="391"/>
-			<mx:SetProperty target="{formCategoryDesc}" name="height" value="190"/>
-			<mx:SetProperty target="{formitem1}" name="x" value="10"/>
-			<mx:SetProperty target="{formitem1}" name="y" value="64"/>
-			<mx:SetProperty target="{formitem2}" name="x" value="10"/>
-			<mx:SetProperty target="{formitem2}" name="y" value="37"/>
-			<mx:SetProperty target="{formitem3}" name="x" value="10"/>
-			<mx:SetProperty target="{formitem3}" name="y" value="10"/>
-		</mx:State>
-		<mx:State name="COMMUNITY">
-			<mx:AddChild relativeTo="{communityView}"/>
-			<mx:RemoveChild target="{categoryView}"/>
-			<mx:SetProperty target="{formCommunityDesc}" name="height" value="190"/>
-			<mx:SetProperty target="{formitem4}" name="x" value="10"/>
-			<mx:SetProperty target="{formitem4}" name="y" value="64"/>
-			<mx:SetProperty target="{formitem5}" name="x" value="10"/>
-			<mx:SetProperty target="{formitem5}" name="y" value="37"/>
-			<mx:SetProperty target="{formitem6}" name="x" value="10"/>
-			<mx:SetProperty target="{formitem6}" name="y" value="10"/>
-		</mx:State>
+		<s:State name="CATEGORY"/>
+		<s:State name="COMMUNITY"/>
 	</mx:states>
-	<mx:Panel title="     커뮤니티 정보" width="686" height="383" x="0" y="0" layout="absolute" styleName="panelContents" verticalScrollPolicy="off" horizontalScrollPolicy="off">
-				<mx:Label text="커뮤니티 이름" x="16" y="38"/>
-				<mx:TextInput id="searchKeyword" imeMode="KOREAN" enter="searchCommunity()" x="63" y="36" width="179" backgroundAlpha="#ffffff" borderColor="#abbdd2" borderStyle="solid" color="#333333" cornerRadius="4"/>
-				<mx:Button id="searchButton" click="searchCommunity()" x="247" y="32" styleName="buttonSearch" toolTip="Search"/>
-				<mx:Button label="저장" click="saveCommunity()" x="609.8" y="36" styleName="button01" icon="@Embed(source='../assets/images/icon_save.png')" textAlign="left"/>
-			<mx:HDividedBox width="680" height="300" x="2" y="66">
-			<mx:Canvas width="265" height="300" styleName="canvasTree" id="canvas1">
-				<mx:Tree id="trvCategory" dataProvider="{categoryTree}" showRoot="true" width="242" height="283" labelField="label" verticalScrollPolicy="auto" itemClick="treeClickHandler()" x="13" y="7"/>
-			</mx:Canvas>
-				<mx:Canvas id="categoryView" width="200" height="280" backgroundAlpha="0">
-						<mx:FormItem label="ID" id="formitem3">
-			 				<mx:TextInput id="formCategoryId" text="{category.categoryId}" width="230" editable="false" height="19"/> 
+	
+	<fx:Declarations>
+		<!-- Place non-visual elements (e.g., services, value objects) here -->
+		<mx:RemoteObject id="categoryService" destination="categoryService" showBusyCursor="true">
+			<mx:method name="getTree" result="getCategoryTreeResultHandler(event)" fault="ResultHandler.faultMessage(event)"/>
+			<mx:method name="getList" fault="ResultHandler.faultMessage(event)"/>
+		</mx:RemoteObject> 
+		
+		<mx:RemoteObject id="communityService" destination="communityService" showBusyCursor="true">
+			<mx:method name="getList" fault="ResultHandler.faultMessage(event)"/>
+			<mx:method name="saveAll" fault="ResultHandler.faultMessage(event)" result="saveAllResultHandler(event)"/>
+		</mx:RemoteObject>
+	</fx:Declarations>
+	
+	<mx:Panel title="커뮤니티 정보" width="100%" height="100%" layout="vertical" verticalScrollPolicy="off" horizontalScrollPolicy="off"
+			  color="#FFFFFF" titleBackgroundSkin="@Embed('../assets/images/bg_title.png')" paddingLeft="5" paddingRight="5" paddingBottom="5" verticalGap="0">
+		<mx:HBox width="100%" height="30" verticalAlign="middle" color="#000000" >
+			<mx:HBox width="70%" horizontalAlign="left"
+					 verticalAlign="middle">
+				<mx:Label text="커뮤니티 이름" />
+				<mx:TextInput id="searchKeyword" imeMode="KOREAN" enter="searchCommunity()" width="179" borderColor="#abbdd2" borderStyle="solid" color="#333333"/>
+				<mx:Button label="검색" id="searchButton" click="searchCommunity()" styleName="buttonSearch" toolTip="Search"/>	
+			</mx:HBox>
+			<mx:HBox width="30%" horizontalAlign="right">
+				<mx:Button label="저장" click="saveCommunity()" styleName="button01" icon="@Embed(source='../assets/images/icon_save.png')" textAlign="left"/>	
+			</mx:HBox>
+		</mx:HBox>
+		
+		<mx:HDividedBox width="100%" height="400" paddingBottom="5" paddingLeft="5" paddingRight="5" paddingTop="5" color="#000000" >
+			
+			<mx:Tree id="trvCategory" dataProvider="{categoryTree}" showRoot="true" width="230" height="100%" labelField="label" verticalScrollPolicy="auto" itemClick="treeClickHandler()"/>
+			
+			<mx:Panel title="카테고리 정보1" id="categoryView" includeIn="CATEGORY" width="380" height="100%"
+					  color="#FFFFFF" chromeColor="#666C86">
+				<mx:VBox width="100%" height="100%" backgroundAlpha="0">
+					<mx:Form width="100%" height="100%" color="#000000">
+						<mx:FormItem label="ID" id="formitem3" width="100%">
+							<mx:TextInput id="formCategoryId" text="{category.categoryId}" width="100%" editable="false" height="21" /> 
 						</mx:FormItem>
-						<mx:FormItem label="이름" id="formitem2">
-							<mx:TextInput id="formCategoryName" text="{category.categoryName}" width="230" maxChars="20" editable="false" height="19"/> 
+						<mx:FormItem label="이름" id="formitem2" width="100%">
+							<mx:TextInput id="formCategoryName" text="{category.categoryName}" width="100%" maxChars="20" editable="false" height="21"/> 
 						</mx:FormItem>
-						<mx:FormItem label="설명" height="70%" id="formitem1">
-							<mx:TextArea id="formCategoryDesc" text="{category.categoryDesc}" width="306" height="208" editable="false"/> 
+						<mx:FormItem label="설명" width="100%" height="70%" id="formitem1">
+							<mx:TextArea id="formCategoryDesc" text="{category.categoryDesc}" width="100%" height="200" editable="false"/> 
 						</mx:FormItem>
-				</mx:Canvas>
-				<mx:Canvas id="communityView" width="200" height="280" backgroundAlpha="0">
-						<mx:FormItem label="ID" id="formitem6">
-							<mx:TextInput id="formCommunityId" text="{community.communityId}" width="230" editable="false" height="19"/> 
+					</mx:Form>
+				</mx:VBox>
+			</mx:Panel>
+			
+			<mx:Panel title="커뮤니티 정보1" id="communityView" includeIn="COMMUNITY" width="380" height="100%" chromeColor="#666C86" color="#FFFFFF">
+				<mx:VBox backgroundAlpha="0" width="100%" height="100%">
+					<mx:Form width="100%" height="100%" color="#000000">
+						<mx:FormItem label="ID" id="formitem6" width="100%">
+							<mx:TextInput id="formCommunityId" text="{community.communityId}" width="100%" editable="false" height="21"/> 
 						</mx:FormItem>
-						<mx:FormItem label="이름" id="formitem5">
-							<mx:TextInput id="formCommunityName" text="{community.communityName}" width="230" maxChars="20" focusOut="updateCommunity()" height="19"/> 
+						<mx:FormItem label="이름" id="formitem5" width="100%">
+							<mx:TextInput id="formCommunityName" text="{community.communityName}" width="100%" maxChars="20" focusOut="updateCommunity()" height="21"/> 
 						</mx:FormItem>
-						<mx:FormItem label="설명" height="70%" id="formitem4">
-							<mx:TextArea id="formCommunityDesc" text="{community.communityDesc}" width="306" height="208" focusOut="updateCommunity()"/> 
+						<mx:FormItem label="설명" height="70%" width="100%" id="formitem4">
+							<mx:TextArea id="formCommunityDesc" text="{community.communityDesc}" width="100%" height="200" focusOut="updateCommunity()"/> 
 						</mx:FormItem>
-				</mx:Canvas>
-			</mx:HDividedBox>
+					</mx:Form>
+				</mx:VBox>
+			</mx:Panel>
+			
+		</mx:HDividedBox>
 	</mx:Panel>
 </mx:Module>

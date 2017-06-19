@@ -78,7 +78,7 @@ package org.anyframe.flex.messaging.data
 			_ROWTYPE=rowType;
 		}*/
 		
-		//사용자 정의 직열화 입출력
+		// Serializable
 		public override function readExternal(input:IDataInput):void {
 			ROWTYPE = input.readObject() as String;
 			super.readExternal(input);

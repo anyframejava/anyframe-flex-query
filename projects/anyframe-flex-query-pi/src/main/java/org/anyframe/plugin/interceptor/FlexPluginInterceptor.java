@@ -76,7 +76,7 @@ public class FlexPluginInterceptor {
 		}catch(Exception e){
 			e.printStackTrace();
 			log
-			.warn("Error occurred in postUninstall FlexPluginInterceptor. The reason is a '"
+			.warn("Error occurred in postInstall FlexPluginInterceptor. The reason is a '"
 					+ e.getMessage() + "'.");
 		}
 	}

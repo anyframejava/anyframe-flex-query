@@ -31,6 +31,13 @@ public class DataSet extends ArrayList
 	public String insertQueryId = "";
 	public String updateQueryId = "";
 	public String deleteQueryId = "";
+	public int currentPage;
+	public int totalCount;
+	public int pageunit = 10;
+	public int pagesize = 10;
+	public int maxPage;
+	public int beginUnitPage;
+	public int endUnitPage;
 	
 	public DataSet()
     {
@@ -54,6 +61,13 @@ public class DataSet extends ArrayList
 		this.insertQueryId = (String)in.readObject();
 		this.updateQueryId = (String)in.readObject();
 		this.deleteQueryId = (String)in.readObject();
+		this.currentPage = (Integer)in.readObject();
+		this.totalCount = (Integer)in.readObject();
+		this.pageunit = (Integer)in.readObject();
+		this.pagesize = (Integer)in.readObject();
+		this.maxPage = (Integer)in.readObject();
+		this.beginUnitPage = (Integer)in.readObject();
+		this.endUnitPage = (Integer)in.readObject();
 		
 		Object value = in.readObject();
 		if(value instanceof List) {
@@ -69,6 +83,13 @@ public class DataSet extends ArrayList
 		out.writeObject(this.insertQueryId);
 		out.writeObject(this.updateQueryId);
 		out.writeObject(this.deleteQueryId);
+		out.writeObject(this.currentPage);
+		out.writeObject(this.totalCount);
+		out.writeObject(this.pageunit);
+		out.writeObject(this.pagesize);
+		out.writeObject(this.maxPage);
+		out.writeObject(this.beginUnitPage);
+		out.writeObject(this.endUnitPage);
 		
 		List value =  new ArrayList();		
 		value.addAll(this.subList(0, this.size()));

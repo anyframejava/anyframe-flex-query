@@ -1,6 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
-<mx:Application xmlns:mx="http://www.adobe.com/2006/mxml" layout="vertical" xmlns:data="org.anyframe.flex.messaging.data.*">
-	<mx:Script>
+<s:Application xmlns:fx="http://ns.adobe.com/mxml/2009" 
+			   xmlns:s="library://ns.adobe.com/flex/spark" 
+			   xmlns:mx="library://ns.adobe.com/flex/mx"
+			   xmlns:data="org.anyframe.flex.messaging.data.*">
+	<fx:Script>
 		<![CDATA[
 
 			import mx.collections.ArrayCollection;
@@ -30,11 +33,18 @@
 			}
 			
 		]]>
-	</mx:Script>
+	</fx:Script>
 	
+	<fx:Declarations>
+		<!-- Place non-visual elements (e.g., services, value objects) here -->
 		<data:DataSet id="dsContact" dataSetName="dsContact"
 					  selectQueryId="findFlexQueryContactList" />
 		<data:DataService id="dataService" fault="dataService_faultHandler(event)" result="getList_resultHandler(event)"/>
+	</fx:Declarations>
+	
+	<s:layout>
+		<s:VerticalLayout gap="0" horizontalAlign="center"/>
+	</s:layout>
 	
 	<mx:ApplicationControlBar width="100%">
 		<mx:TextInput id="searchStr"/>
@@ -55,4 +65,4 @@
 		</mx:columns>
 		</mx:DataGrid>
 
-</mx:Application>
+</s:Application>

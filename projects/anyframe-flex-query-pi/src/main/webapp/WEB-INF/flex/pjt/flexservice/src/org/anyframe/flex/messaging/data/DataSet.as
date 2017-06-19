@@ -19,16 +19,24 @@ package org.anyframe.flex.messaging.data
 		// DataSet Name
 		public var dataSetName:String = "";
 		
-		// Insert, Update, Delete 실행될 Query Id
+		// Insert, Update, Delete Query Id
 		public var selectQueryId:String = "";
 		public var insertQueryId:String="";
 		public var updateQueryId:String="";
 		public var deleteQueryId:String="";
+		public var currentPage:int = 1;
+		public var totalCount:int;
+		public var pageunit:int = 10;
+		public var pagesize:int = 10;
+		public var maxPage:int;
+		public var beginUnitPage:int;
+		public var endUnitPage:int;
 		
-		//변경된 행 정보만 전송, false이면 모든 행을 전송. 모든 해의 ROWTYPE은 'U'로 변경됨
+		// true  : send changed data only,
+		// false : send all data(ROWTYPE will be changed as 'U') 
 		public var useChangeInfo:Boolean = true; 
 		
-		//삭제된 row로 저장
+		// move to remove buffer
 		private var _removeDataBuffer:ArrayCollection=new ArrayCollection();
 		
 		public function DataSet(source:Array=null,name:String="")
@@ -48,8 +56,8 @@ package org.anyframe.flex.messaging.data
 		}
 		
 		/**
-		 * Collection 안에 포함되어 있는 DataRow가 변경될 경우 발생  
-		 * Update Flag 표시
+		 * Event Handler when DataRow in the Collection changed.
+		 * Set Update Flag.
 		 */
 		private function collectionHandler(event:CollectionEvent):void
 		{
@@ -72,7 +80,7 @@ package org.anyframe.flex.messaging.data
 		}
 		
 		/**
-		 * 버퍼와 ROWTYPE만 제거 
+		 * Clear buffer and ROWTYPE 
 		 */
 		public function clearBuffer():void
 		{
@@ -86,7 +94,7 @@ package org.anyframe.flex.messaging.data
 		}
 		
 		/**
-		 * Collection의 모든 데이터와 buffer를 비움 
+		 * Clear all Collection data and buffer 
 		 */
 		public function clear():void
 		{
@@ -104,7 +112,7 @@ package org.anyframe.flex.messaging.data
 		
 		/********************** override function ***************************/
 		
-		/** add function(Insert Flag 표시) **/
+		/** add function(Insert Flag) **/
 		public override function addItem(item:Object):void{
 			var dw:DataRow = new DataRow(item);
 			dw.ROWTYPE = "I";
@@ -119,19 +127,19 @@ package org.anyframe.flex.messaging.data
 			super.addItemAt(dw, index);	
 		}
 		
-		public function addAll(addList:IList):void{
+		public override function addAll(addList:IList):void{
 			for(var i:int=0; i<addList.length; i++){
 				this.addItem(addList[i]);
 			}
 		}
-		public function addAllAt(addList:IList, index:int):void{
+		public override function addAllAt(addList:IList, index:int):void{
 			for(var i:int=0; i<addList.length; i++){
 				this.addItemAt(addList[i], index);
 				index++;
 			}
 		}
 		
-		/** remove function(Remove Flag 표시) **/
+		/** remove function(Remove Flag) **/
 		public override function removeItemAt(index:int):Object{
 			
 			var row:Object = super.removeItemAt(index);
@@ -203,13 +211,20 @@ package org.anyframe.flex.messaging.data
 	
 		
 		
-		//************ 사용자 정의 직열화 입출력 **************/
+		//************ Serializable **************/
 		public override function readExternal(input:IDataInput):void {
 			dataSetName = input.readObject() as String;
 			selectQueryId = input.readObject() as String;
 			insertQueryId = input.readObject() as String;
 			updateQueryId = input.readObject() as String;
 			deleteQueryId = input.readObject() as String;
+			currentPage = input.readObject() as int;
+			totalCount = input.readObject() as int;
+			pageunit = input.readObject() as int;
+			pagesize = input.readObject() as int;
+			maxPage = input.readObject() as int;
+			beginUnitPage = input.readObject() as int;
+			endUnitPage = input.readObject() as int;
 			this.addAll(input.readObject());
 			
 		}
@@ -220,6 +235,13 @@ package org.anyframe.flex.messaging.data
 			output.writeObject(insertQueryId);
 			output.writeObject(updateQueryId);
 			output.writeObject(deleteQueryId);
+			output.writeObject(currentPage);
+			output.writeObject(totalCount);
+			output.writeObject(pageunit);
+			output.writeObject(pagesize);
+			output.writeObject(maxPage);
+			output.writeObject(beginUnitPage);
+			output.writeObject(endUnitPage);
 			var arrayCollection:ArrayCollection = new ArrayCollection(this.source);
 			output.writeObject(arrayCollection);
 		}

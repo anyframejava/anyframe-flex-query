@@ -15,11 +15,15 @@
  */
 package org.anyframe.flex.query.dao;
 
+import java.util.ArrayList;
 import java.util.Collection;
+import java.util.HashMap;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
 
+import org.anyframe.flex.query.data.DataRow;
+import org.anyframe.flex.query.data.DataSet;
 import org.anyframe.pagination.Page;
 import org.anyframe.query.QueryService;
 import org.anyframe.query.QueryServiceException;
@@ -29,6 +33,7 @@ import org.anyframe.query.QueryServiceException;
  * this interface is including method to select, insert, update, delete, and save 
  * to database using DataSet.
  * @author Jonghoon, Kim
+ * @author Youngmin Jo
  *
  */
 public class FlexDao{
@@ -214,7 +219,25 @@ public class FlexDao{
 		return queryService.remove(queryId, params);
 	}
 	
-	protected Page getListWithPaging(String queryId, Map searchMap, int pageIndex, int pageSize, int pageUnit)
+	/**
+	 * 
+     * @param queryId
+     * 		query id to execute in query mapping file.
+	 * @param searchMap
+	 * 		Map contains search conditions.
+	 * @param pageIndex
+	 * 		current Page number
+	 * @param pageSize
+	 * 		row size a page
+	 * @param pageUnit
+	 * 		page unit
+	 * @return
+	 * 		  Page object includes information about paging navigation status.
+	 * @throws QueryServiceException
+	 *		if there is any problem executing the
+	 *		query
+	 */
+	public Page getListWithPaging(String queryId, Map searchMap, int pageIndex, int pageSize, int pageUnit)
 			throws QueryServiceException {
 		Object[] params = convertParams(searchMap);
 		return findListWithPaging(queryId, params, pageIndex, pageSize, pageUnit);
@@ -229,7 +252,94 @@ public class FlexDao{
 		int totalSize = ((Long) queryMap.get(QueryService.COUNT)).intValue();
 		return new Page(resultList, (new Integer(pageIndex)).intValue(), totalSize, pageUnit, pageSize);
 	}
+	
+	protected int[] batchUpdate(String queryId, List list) throws QueryServiceException{
+		return queryService.batchUpdate(queryId, list);
+	}
+	
+	/**
+	 * execute batch operation for given queryId.
+     * @param queryId
+     * 		query id to execute in query mapping file.
+	 * @param dataSet
+	 * 		DataSet
+	 * @param param
+	 * 		Map contains search conditions.
+	 * @return
+	 * 		total count of executed query operation.
+	 * @throws QueryServiceException
+	 */
+	public int batchExecute(String queryId, DataSet dataSet, Map param) throws QueryServiceException{
+		int dsSize = dataSet.size();
+		List list = new ArrayList(); 
+		
+		for(int count = 0 ; count < dsSize ; count++){
+			DataRow dr = (DataRow) dataSet.get(count);
+			Object[] row = convertParams(dr, param);
+			list.add(row);
+		}
+		
+		return batchUpdateCount(queryService.batchUpdate(queryId, list));
+	}
+	
+	/**
+	 * This is the method for inserting, updating and deleting using DataSet.
+	 * @param dataSet
+	 * 		DataSet object including query id.
+	 * @param param
+	 * 		param including query condition.
+	 * @return
+	 * 		Map including result count for each queryId.
+	 * @throws QueryServiceException
+	 * 		if there is any problem executing the query
+	 */
+	public Map saveAll(DataSet dataSet, Map param) throws QueryServiceException{
+		List insertList  = new ArrayList<Map>();
+		List updateList  = new ArrayList<Map>();
+		List deleteList  = new ArrayList<Map>();
+		
+		int dsSize = dataSet.size();
+		
+		for( int i = 0 ; i < dsSize ; i ++ ){
+			DataRow dr = (DataRow)dataSet.get(i); 
+			if(dr.ROWTYPE.equals("D")) {
+				Object[] deleteRow = convertParams(dr, param);
+				deleteList.add(deleteRow);
+			}else if( dr.ROWTYPE.equals("I") ){
+				Object[] insertRow = convertParams(dr, param);
+				insertList.add(insertRow);
+			}else if( dr.ROWTYPE.equals("U") ){
+				Object[] updateRow = convertParams(dr, param);
+				updateList.add(updateRow);
+			}
+		}
+		
+		Map resultMap = new HashMap<String, Integer>();
+		
+		if(deleteList.size() != 0){
+			resultMap.put( dataSet.deleteQueryId, batchUpdateCount(batchUpdate(dataSet.deleteQueryId, deleteList) )) ;
+		}
+		
+		if(insertList.size() != 0){
+			resultMap.put( dataSet.insertQueryId, batchUpdateCount(batchUpdate(dataSet.insertQueryId, insertList) ));
+		}
+		
+		if(updateList.size() != 0){
+			resultMap.put( dataSet.updateQueryId, batchUpdateCount(batchUpdate(dataSet.updateQueryId, updateList) ));
+		}
+		
+		return resultMap;
+	}
 
+	
+	private int batchUpdateCount(int[] cnt){
+		int sum = 0;
+		for(int arrayLength = 0 ; arrayLength < cnt.length ; arrayLength++){
+			sum += cnt[arrayLength];
+		}
+		return sum;
+	}
+	
 	private Object[] convertParams(Map targetMap) {
 		Object[] params = new Object[targetMap.size()];
 		Iterator targetMapIterator = targetMap.entrySet().iterator();

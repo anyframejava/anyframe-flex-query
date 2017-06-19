@@ -1,6 +1,12 @@
 <?xml version="1.0" encoding="utf-8"?>
-<mx:Module xmlns:mx="http://www.adobe.com/2006/mxml" layout="absolute" width="686" height="383" initialize="init()">
-	<mx:Script>
+<mx:Module xmlns:fx="http://ns.adobe.com/mxml/2009" 
+		   xmlns:s="library://ns.adobe.com/flex/spark" 
+		   xmlns:mx="library://ns.adobe.com/flex/mx"
+		   layout="vertical" 
+		   width="100%" height="100%" 
+		   initialize="init()">
+	
+	<fx:Script>
 		<![CDATA[
 			import samples.sample07.Sample07Alert;
 			import mx.controls.Alert;
@@ -106,7 +112,7 @@
 				var userDetailPopup:IFlexDisplayObject = PopUpManager.createPopUp(this as DisplayObject, Sample07Detail, true);
 				var popUp:Sample07Detail = userDetailPopup as Sample07Detail;
 				popUp.addEventListener( UserEvent.UPDATE, updateUser );
-				popUp.tn.selectedIndex = 2;
+				popUp.tn.selectedIndex = 0;
 				popUp.deptList = deptList;
 				popUp.userInfo = user;
 				PopUpManager.centerPopUp(popUp);
@@ -133,11 +139,13 @@
 			}
 			
 			private function addUser():void{
-            	var addUser:User = new User();
-				addUser.status = 1;
-				addUser.deptId = trvDept.selectedItem.deptId;
-				addUser.deptName = trvDept.selectedItem.deptName;
-				openPopUserDetail(addUser);
+				if(trvDept.selectedItem != null) {
+	            	var addUser:User = new User();
+					addUser.status = 1;
+					addUser.deptId = trvDept.selectedItem.deptId;
+					addUser.deptName = trvDept.selectedItem.deptName;
+					openPopUserDetail(addUser);
+				}
 			}
 			
 			private function deleteUser():void{
@@ -211,35 +219,48 @@
 	    	getUserList();
 	    }
 		]]>
-	</mx:Script>
-	<mx:RemoteObject id="deptService" destination="deptService" showBusyCursor="true">
-		<mx:method name="getTree" result="getDeptTreeResultHandler(event)" fault="ResultHandler.faultMessage(event)"/>
-		<mx:method name="getList" result="getDeptListResultHandler(event)" fault="ResultHandler.faultMessage(event)"/>
-	</mx:RemoteObject>
-	<mx:RemoteObject id="userService" destination="userService" showBusyCursor="true">
-		<mx:method name="getList" result="getUserListResultHandler(event)" fault="ResultHandler.faultMessage(event)"/>
-		<mx:method name="saveAll" result="saveAllResultHandler(event)" fault="ResultHandler.faultMessage(event)"/>
-	</mx:RemoteObject>
-	<mx:Array id="columnsInfo">
-		<mx:DataGridColumn dataField="userName" headerStyleName="dataGridHeaderAlign" headerText="이름"/>
-		<mx:DataGridColumn dataField="jobPosition" headerStyleName="dataGridHeaderAlign" headerText="직급"/>
-		<mx:DataGridColumn dataField="phone" headerStyleName="dataGridHeaderAlign" headerText="자택전화"/>
-		<mx:DataGridColumn dataField="cellPhone" headerStyleName="dataGridHeaderAlign" headerText="이동전화"/>
-	</mx:Array>
-	<mx:Panel title="     부서 목록" width="686" height="383" x="0" y="0" layout="absolute" styleName="panelContents" verticalScrollPolicy="off" horizontalScrollPolicy="off">
-				<mx:Label text="부서명" x="20" y="36"/>
-				<mx:TextInput id="searchKeyword" imeMode="KOREAN" enter="searchDept()" x="63" y="36" width="179" height="19" backgroundColor="#ffffff" borderColor="#abbdd2" borderStyle="solid" borderThickness="1" color="#333333" cornerRadius="4"/>
-				<mx:Button id="searchButton" click="searchDept()" x="242" y="32" styleName="buttonSearch" toolTip="Search"/>
-				<mx:Button label="추가" click="addUser()" x="502" y="32" textAlign="left" icon="@Embed(source='../assets/images/icon_plus.png')"/>
-				<mx:Button label="삭제" click="deleteUser()" x="562" y="32" textAlign="left" icon="@Embed(source='../assets/images/icon_delete.png')"/>
-				<mx:Button label="저장" click="saveUser()" x="621" y="32" textAlign="left" styleName="button01" icon="@Embed(source='../assets/images/icon_save.png')"/>
-				<mx:Canvas width="220" height="315" x="3" y="66" styleName="canvasTree">
-					<mx:Tree id="trvDept" dataProvider="{deptTree}" showRoot="true" width="196" height="287" labelField="deptName" verticalScrollPolicy="auto" itemClick="deptTreeClick()" x="13" y="16" styleName="panelTree" useRollOver="true" rollOverColor="#abbdd2" selectionColor="#9198a3"/>	
-				</mx:Canvas>
-				<mx:DataGrid id="grdUser" dataProvider="{userList}" columns="{columnsInfo}" width="449" height="307" rowCount="7" 
-								verticalScrollPolicy="on" horizontalScrollPolicy="off" editable="false" doubleClickEnabled="true" doubleClick="openPopUserDetail(grdUser.selectedItem as User)" x="234" y="66" borderColor="#a7a8ab" borderStyle="solid" borderThickness="1">
-							<mx:headerBackgroundSkin>@Embed(source='../assets/images/bg_gridHeader.png')</mx:headerBackgroundSkin>
-				</mx:DataGrid>
+	</fx:Script>
+	
+	<fx:Declarations>
+		<!-- Place non-visual elements (e.g., services, value objects) here -->
+		<mx:RemoteObject id="deptService" destination="deptService" showBusyCursor="true">
+			<mx:method name="getTree" result="getDeptTreeResultHandler(event)" fault="ResultHandler.faultMessage(event)"/>
+			<mx:method name="getList" result="getDeptListResultHandler(event)" fault="ResultHandler.faultMessage(event)"/>
+		</mx:RemoteObject>
+		<mx:RemoteObject id="userService" destination="userService" showBusyCursor="true">
+			<mx:method name="getList" result="getUserListResultHandler(event)" fault="ResultHandler.faultMessage(event)"/>
+			<mx:method name="saveAll" result="saveAllResultHandler(event)" fault="ResultHandler.faultMessage(event)"/>
+		</mx:RemoteObject>
+		<fx:Array id="columnsInfo">
+			<mx:DataGridColumn dataField="userName" headerStyleName="dataGridHeaderAlign" headerText="이름"/>
+			<mx:DataGridColumn dataField="jobPosition" headerStyleName="dataGridHeaderAlign" headerText="직급"/>
+			<mx:DataGridColumn dataField="phone" headerStyleName="dataGridHeaderAlign" headerText="자택전화"/>
+			<mx:DataGridColumn dataField="cellPhone" headerStyleName="dataGridHeaderAlign" headerText="이동전화"/>
+		</fx:Array>
+	</fx:Declarations>
+	
+	<mx:Panel title="부서 목록" width="100%" height="100%" layout="vertical" verticalScrollPolicy="off" horizontalScrollPolicy="off"
+			  color="#FFFFFF" titleBackgroundSkin="@Embed('../assets/images/bg_title.png')" paddingLeft="5" paddingRight="5" paddingBottom="5" verticalGap="0">
+		<mx:HBox width="100%" horizontalGap="0" paddingBottom="5" paddingLeft="0" paddingRight="0" paddingTop="5" verticalAlign="middle" color="#000000" >
+			<mx:HBox width="70%" horizontalAlign="left" verticalAlign="middle">
+				<mx:Label text="부서명"/>
+				<mx:TextInput id="searchKeyword" imeMode="KOREAN" enter="searchDept()" width="179" height="19" borderColor="#abbdd2" borderStyle="solid" color="#333333"/>
+				<mx:Button id="searchButton" label="검색" click="searchDept()" toolTip="Search"/>
+			</mx:HBox>
+			<mx:HBox width="30%" horizontalAlign="right">
+				<mx:Button label="추가" click="addUser()" textAlign="left" icon="@Embed(source='../assets/images/icon_plus.png')"/>
+				<mx:Button label="삭제" click="deleteUser()" textAlign="left" icon="@Embed(source='../assets/images/icon_delete.png')"/>
+				<mx:Button label="저장" click="saveUser()" textAlign="left" icon="@Embed(source='../assets/images/icon_save.png')"/>
+			</mx:HBox>
+		</mx:HBox>
+		<mx:HBox width="100%" paddingBottom="5" paddingLeft="5" paddingRight="5" paddingTop="5" verticalAlign="top" horizontalAlign="left" color="#000000" >
+			<mx:Tree id="trvDept" dataProvider="{deptTree}" showRoot="true" width="150" height="390" labelField="deptName" verticalScrollPolicy="auto" 
+					 itemClick="deptTreeClick()" useRollOver="true" rollOverColor="#abbdd2" selectionColor="#9198a3"/>	
+			<mx:DataGrid id="grdUser" dataProvider="{userList}" columns="{columnsInfo}" width="620" height="390" rowCount="7"
+						 verticalScrollPolicy="auto" horizontalScrollPolicy="off" editable="false" doubleClickEnabled="true" 
+						 doubleClick="openPopUserDetail(grdUser.selectedItem as User)" borderColor="#a7a8ab" borderStyle="solid">
+			</mx:DataGrid>	
+		</mx:HBox>
 	</mx:Panel>
 	
 </mx:Module>

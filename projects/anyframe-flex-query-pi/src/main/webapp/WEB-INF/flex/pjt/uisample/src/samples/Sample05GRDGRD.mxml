@@ -1,8 +1,15 @@
 <?xml version="1.0" encoding="utf-8"?>
-<mx:Module xmlns:mx="http://www.adobe.com/2006/mxml" 
-	width="686"	height="383" x="245" y="22" layout="absolute"
-	initialize="init()" backgroundColor="#d8d8d8" verticalScrollPolicy="off" horizontalScrollPolicy="off">
-	<mx:Script>
+<mx:Module xmlns:fx="http://ns.adobe.com/mxml/2009" 
+		   xmlns:s="library://ns.adobe.com/flex/spark" 
+		   xmlns:mx="library://ns.adobe.com/flex/mx" 
+		   width="100%"	height="100%"
+		   layout="vertical"
+		   initialize="init()" 
+		   backgroundColor="#d8d8d8" 
+		   verticalScrollPolicy="off" 
+		   horizontalScrollPolicy="off">
+	
+	<fx:Script>
 		<![CDATA[
 			import samples.renderer.ResultHandler;
 			import samples.domain.Community;
@@ -77,37 +84,46 @@
 				init();
 			}
 		]]>
-	</mx:Script>
+	</fx:Script>
 	
-	<mx:ArrayCollection id="computerList"/>
+	<fx:Declarations>
+		<!-- Place non-visual elements (e.g., services, value objects) here -->
+		<mx:ArrayCollection id="computerList"/>
+		
+		<mx:ArrayCollection id="carList"/>
+		
+		<mx:RemoteObject id="communityService" destination="communityService" showBusyCursor="true">
+			<mx:method name="getList" fault="ResultHandler.faultMessage(event)"/>
+			<mx:method name="saveAll" fault="ResultHandler.faultMessage(event)"/>
+		</mx:RemoteObject>
+	</fx:Declarations>
 	
-	<mx:ArrayCollection id="carList"/>
-	
-	<mx:RemoteObject id="communityService" destination="communityService" showBusyCursor="true">
-		<mx:method name="getList" fault="ResultHandler.faultMessage(event)"/>
-		<mx:method name="saveAll" fault="ResultHandler.faultMessage(event)"/>
-	</mx:RemoteObject>
-	
-	<mx:Panel title="     카테고리 이동" width="686" height="383" layout="absolute" styleName="panelContents" verticalScrollPolicy="off" horizontalScrollPolicy="off">
-			<mx:Button label="조회" id="getDataButton" click="init()" x="562" y="32"/>
-			<mx:Button label="저장" id="updateButton" click="update()" x="621" y="32" styleName="button01" icon="@Embed(source='../assets/images/icon_save.png')"/>	
-			<mx:DataGrid width="320" height="310" id="grdComputer" dataProvider="{computerList}" verticalScrollPolicy="on" horizontalScrollPolicy="off" editable="false" x="3" y="64" 
-				allowMultipleSelection="false" borderThickness="1" borderStyle="solid" borderColor="#a7a8ab" rollOverColor="#abbdd2">
+	<mx:Panel title="카테고리 이동" width="100%" height="100%" layout="vertical" verticalScrollPolicy="off" horizontalScrollPolicy="off"
+			  color="#FFFFFF" titleBackgroundSkin="@Embed('../assets/images/bg_title.png')">
+		<mx:HBox width="100%" horizontalAlign="right" paddingTop="5" paddingRight="5" paddingBottom="5" color="#000000">
+			<mx:Button label="조회" id="getDataButton" click="init()"/>
+			<mx:Button label="저장" id="updateButton" click="update()" icon="@Embed(source='../assets/images/icon_save.png')"/>	
+		</mx:HBox>
+		<mx:HBox width="100%" horizontalAlign="center" verticalAlign="middle" color="#000000">
+			<mx:DataGrid width="345" height="390" id="grdComputer" dataProvider="{computerList}" verticalScrollPolicy="auto" horizontalScrollPolicy="off" editable="false" 
+						 rowHeight="22" allowMultipleSelection="false" borderStyle="solid" borderColor="#a7a8ab">
 				<mx:headerBackgroundSkin>@Embed(source='../assets/images/bg_gridHeader.png')</mx:headerBackgroundSkin>
 				<mx:columns>
-					<mx:DataGridColumn dataField="communityName" headerStyleName="dataGridHeaderAlign" headerText="컴퓨터" color="#ffffff"/>
+					<mx:DataGridColumn dataField="communityName" headerStyleName="dataGridHeaderAlign" headerText="컴퓨터"/>
 				</mx:columns>
 			</mx:DataGrid>
-				<mx:Spacer height="40%"/>
-				<mx:Spacer height="40%"/>
-			<mx:DataGrid width="320" height="310" id="grdCar" dataProvider="{carList}" verticalScrollPolicy="on" horizontalScrollPolicy="off" editable="false" x="363" y="64" 
-				borderThickness="1" borderStyle="solid" borderColor="#a7a8ab" rollOverColor="#abbdd2">
+			<mx:VBox>
+				<mx:Button label="&gt;&gt;" width="35" height="18" id="moveToRight" click="toRight()"/>
+				<mx:Button label="&lt;&lt;" width="35" height="18" id="moveToLeft" click="toLeft()"/>	
+			</mx:VBox>
+			<mx:DataGrid width="345" height="390" id="grdCar" dataProvider="{carList}" verticalScrollPolicy="auto" horizontalScrollPolicy="off" editable="false"
+						 rowHeight="22" borderStyle="solid" borderColor="#a7a8ab">
 				<mx:headerBackgroundSkin>@Embed(source='../assets/images/bg_gridHeader.png')</mx:headerBackgroundSkin>
 				<mx:columns>
-					<mx:DataGridColumn dataField="communityName" headerStyleName="dataGridHeaderAlign" headerText="자동차" color="#ffffff"/>
+					<mx:DataGridColumn dataField="communityName" headerStyleName="dataGridHeaderAlign" headerText="자동차"/>
 				</mx:columns>
 			</mx:DataGrid>
-			<mx:Button x="333" y="196" width="18" styleName="buttonRight" height="18" id="moveToRight" click="toRight()"/>
-			<mx:Button x="333" y="220" styleName="buttonLeft" width="18" height="18" id="moveToLeft" click="toLeft()"/>
+		</mx:HBox>
+		
 	</mx:Panel>
 </mx:Module>

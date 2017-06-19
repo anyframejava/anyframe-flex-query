@@ -1,8 +1,17 @@
 <?xml version="1.0" encoding="utf-8"?>
-<mx:TitleWindow xmlns:mx="http://www.adobe.com/2006/mxml" layout="vertical" width="350" height="600" showCloseButton="true" 
-	close="PopUpManager.removePopUp(this)" title="Movie Update" creationComplete="create()"
-	verticalScrollPolicy="off" horizontalScrollPolicy="off" xmlns:local="*" >
-	<mx:Script>
+<mx:TitleWindow xmlns:fx="http://ns.adobe.com/mxml/2009" 
+				xmlns:s="library://ns.adobe.com/flex/spark" 
+				xmlns:mx="library://ns.adobe.com/flex/mx"
+				xmlns:local="*"
+				layout="vertical" 
+				width="350" height="600" 
+				showCloseButton="true" 
+				title="Movie Update"
+				close="PopUpManager.removePopUp(this)"  
+				creationComplete="create()"
+				verticalScrollPolicy="off" 
+				horizontalScrollPolicy="off">
+	<fx:Script>
 		<![CDATA[
 			import mx.collections.ArrayCollection;
 			import mx.controls.Alert;
@@ -330,34 +339,36 @@
 				}  
 			}
 		]]>
-	</mx:Script>
+	</fx:Script>
 	
-	<mx:ArrayCollection id="nowPlaying">
-			<mx:Object label="Y" data="Y"/>
-			<mx:Object label="N" data="N"/>
-		</mx:ArrayCollection> 
-
-	<mx:Validator id="val_title"  source="{txtTitle}"  property="text" requiredFieldError="Title을 입력하세요!"/>		
-	<mx:Validator id="val_director"  source="{txtDirector}"  property="text" requiredFieldError="Director를 입력하세요!"/>	
-	<mx:Validator id="val_actors"  source="{txtActors}"  property="text" requiredFieldError="Actors를 입력하세요!"/>
-	<mx:NumberValidator id="val_ticketPrice"  source="{txtTicketPrice}"  property="text" minValue="0" maxValue="9999" domain="int"
-	invalidCharError="숫자를 입력하세요" 
-    lowerThanMinError="작은값을 입력했습니다." exceedsMaxError="값이 너무 큽니다."/>
-	<mx:NumberValidator id="val_runtime"  source="{txtRuntime}"  property="text" minValue="0" maxValue="999" domain="int"
-	invalidCharError="숫자를 입력하세요" 
-    lowerThanMinError="작은값을 입력했습니다." exceedsMaxError="값이 너무 큽니다."/>
-	
-	<mx:RemoteObject id="movieService" destination="flexQueryMovieService">
-		<mx:method name="update" result="movieUpdateResultHandler(event)"/>
-		<mx:method name="remove" result="movieRemoveResultHandler(event)"/>
-	</mx:RemoteObject>
-	
-	<mx:RemoteObject id="uploadInfoService" destination="flexQueryUploadInfoService">
-		<mx:method name="getList" result="getAttachedListResultHandler(event)"/>
-		<mx:method name="create" result="createAttachedListResultHandler(event)"/>
-		<mx:method name="remove" result="removeAttachedListResultHandler(event)"/>
-	</mx:RemoteObject>
-	
+	<fx:Declarations>
+		<mx:ArrayCollection id="nowPlaying">
+			<fx:Object label="Y" data="Y"/>
+			<fx:Object label="N" data="N"/>
+		</mx:ArrayCollection>
+		
+		<mx:Validator id="val_title"  source="{txtTitle}"  property="text" requiredFieldError="Title을 입력하세요!"/>		
+		<mx:Validator id="val_director"  source="{txtDirector}"  property="text" requiredFieldError="Director를 입력하세요!"/>	
+		<mx:Validator id="val_actors"  source="{txtActors}"  property="text" requiredFieldError="Actors를 입력하세요!"/>
+		<mx:NumberValidator id="val_ticketPrice"  source="{txtTicketPrice}"  property="text" minValue="0" maxValue="9999" domain="int"
+							invalidCharError="숫자를 입력하세요" 
+							lowerThanMinError="작은값을 입력했습니다." exceedsMaxError="값이 너무 큽니다."/>
+		<mx:NumberValidator id="val_runtime"  source="{txtRuntime}"  property="text" minValue="0" maxValue="999" domain="int"
+							invalidCharError="숫자를 입력하세요" 
+							lowerThanMinError="작은값을 입력했습니다." exceedsMaxError="값이 너무 큽니다."/>
+		
+		<mx:RemoteObject id="movieService" destination="flexQueryMovieService">
+			<mx:method name="update" result="movieUpdateResultHandler(event)"/>
+			<mx:method name="remove" result="movieRemoveResultHandler(event)"/>
+		</mx:RemoteObject>
+		
+		<mx:RemoteObject id="uploadInfoService" destination="flexQueryUploadInfoService">
+			<mx:method name="getList" result="getAttachedListResultHandler(event)"/>
+			<mx:method name="create" result="createAttachedListResultHandler(event)"/>
+			<mx:method name="remove" result="removeAttachedListResultHandler(event)"/>
+		</mx:RemoteObject>
+		
+	</fx:Declarations>
 	
 	<mx:Form id="movieDetailForm" verticalScrollPolicy="off" horizontalScrollPolicy="off">
 		<mx:FormItem label="ID">
@@ -392,9 +403,9 @@
 				<mx:DataGridColumn dataField="name" headerText="Attached Files" textAlign="center"/>	
 				<mx:DataGridColumn textAlign="center" width="26">
 					<mx:itemRenderer>
-						<mx:Component>
+						<fx:Component>
 							<mx:Image source="@Embed('assets/images/delete.png')" width="26" />
-						</mx:Component>
+						</fx:Component>
 					</mx:itemRenderer>
 				</mx:DataGridColumn>
 			</mx:columns>
@@ -421,10 +432,10 @@
         <mx:Button id="btnCancel" label="CANCEL" click="cancel()"/>
 		
     </mx:ControlBar> 
-    
-    <mx:Binding source="txtTitle.text" destination="movie.title"/>
-	<mx:Binding source="txtDirector.text" destination="movie.director"/>
-	<mx:Binding source="txtActors.text" destination="movie.actors"/>
-	<mx:Binding source="Number(txtTicketPrice.text)" destination="movie.ticketPrice"/>
-	<mx:Binding source="Number(txtRuntime.text)" destination="movie.runtime"/>
+		
+    <fx:Binding source="txtTitle.text" destination="movie.title"/>
+	<fx:Binding source="txtDirector.text" destination="movie.director"/>
+	<fx:Binding source="txtActors.text" destination="movie.actors"/>
+	<fx:Binding source="Number(txtTicketPrice.text)" destination="movie.ticketPrice"/>
+	<fx:Binding source="Number(txtRuntime.text)" destination="movie.runtime"/>
 </mx:TitleWindow>

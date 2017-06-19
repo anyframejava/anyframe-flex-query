@@ -19,6 +19,7 @@ import java.util.List;
 import java.util.Map;
 
 import org.anyframe.flex.query.data.DataRow;
+import org.anyframe.flex.query.data.DataSet;
 
 /**
  * This interface is a common biz. service in developing the
@@ -39,7 +40,19 @@ public interface FlexService {
 	 * @throws Exception
 	 *		if there is any problem executing the query
      */ 
-	public List findList(List dataSetList, Map param) throws Exception ;
+	public List<DataSet> findList(List<DataSet> dataSetList, Map param) throws Exception ;
+
+	/**
+	 * This is a method for querying at developing the
+     * screen using RIA with paging navigator.
+	 * @param dataSetList
+	 * 		The Dataset list including the query id or query condition etc.
+	 * @param param
+	 * 		param including query condition.
+	 * @throws Exception
+	 *		if there is any problem executing the query
+     */ 
+	public List<DataSet> findPagingList(List<DataSet> dataSetList, Map param) throws Exception ;
 	
 	/**
      * This is the method for inserting, updating and deleting using DataSet.
@@ -48,10 +61,54 @@ public interface FlexService {
 	 * @param param
 	 * 		param including query condition.
 	 * @throws Exception
-	 *		if there is any problem executing the
-	 *		query
+	 *		if there is any problem executing the query
      */   
-	public Map saveAll(List dataSetList, Map param) throws Exception ;
+	public Map saveAll(List<DataSet> dataSetList, Map param) throws Exception ;
+	
+	/**
+	 * This method execute an update query defined into DataSet.
+     * @param dataSetList
+	 * 		The Dataset list including query conditions
+	 * @param param
+	 * 		parameters including query condition.
+	 * @throws Exception
+	 *		if there is any problem executing the query
+	 */
+	public Map updateRows(List<DataSet> dataSetList, Map param) throws Exception ;
+	
+	/**
+	 * This method execute a delete query defined into DataSet.
+     * @param dataSetList
+	 * 		The Dataset list including query conditions
+	 * @param param
+	 * 		parameters including query condition.
+	 * @throws Exception
+	 *		if there is any problem executing the query
+	 */	
+	public Map removeRows(List<DataSet> dataSetList, Map param) throws Exception;
+	
+	/**
+	 * This method execute an insert query defined into DataSet.
+     * @param dataSetList
+	 * 		The Dataset list including query conditions
+	 * @param param
+	 * 		parameters including query condition.
+	 * @throws Exception
+	 *		if there is any problem executing the query
+	 */
+	public Map insertRows(List<DataSet> dataSetList, Map param) throws Exception;
+	
+	/**
+	 * This method is for using user defined business logic.
+	 * currently it executes nothing.
+     * @param dataSetList
+	 * 		The Dataset list including query conditions
+	 * @param param
+	 * 		parameters including query condition.
+	 * @throws Exception
+	 *		if there is any problem executing the query
+	 */
+	public Map doService(List<DataSet> dataSetList, Map param) throws Exception;
 	
 	/**
      * This is the method for inquiring using DataSet.

@@ -1,11 +1,18 @@
 <?xml version="1.0" encoding="utf-8"?>
-<mx:TitleWindow xmlns:mx="http://www.adobe.com/2006/mxml" layout="absolute" width="284" height="94" xmlns:brd="anyframe.samples.domain.*" showCloseButton="true" 
-	close="PopUpManager.removePopUp(this)">
-	<mx:Metadata>
+<mx:TitleWindow xmlns:fx="http://ns.adobe.com/mxml/2009" 
+				xmlns:s="library://ns.adobe.com/flex/spark" 
+				xmlns:mx="library://ns.adobe.com/flex/mx" 
+				xmlns:brd="anyframe.samples.domain.*" 
+				layout="vertical" 
+				width="284" height="100" 
+				showCloseButton="true" 
+				close="PopUpManager.removePopUp(this)">
+	<fx:Metadata>
         [Event(name="userSave", type="DetailEvent")]
         [Event(name="userCancel", type="DetailEvent")]
-    </mx:Metadata>
-    <mx:Script>
+    </fx:Metadata>
+	
+    <fx:Script>
     	<![CDATA[
     	import samples.domain.User;
     	import mx.managers.PopUpManager; 
@@ -23,9 +30,9 @@
 			PopUpManager.removePopUp(this)			
 		}
     	]]>
-    </mx:Script>
+    </fx:Script>
     
-    <mx:Label text="변경된 데이터가 있습니다. 저장하시겠습니까?" x="33.5" y="30"/>
+    <mx:Label text="변경된 데이터가 있습니다. 저장하시겠습니까?"/>
 	
 	<mx:ControlBar horizontalAlign="center">
         <mx:Button label="예" click="confirm()"/>
