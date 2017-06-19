@@ -33,14 +33,12 @@ import org.springframework.stereotype.Repository;
 
 @Repository("deptDao")
 public class DeptDao extends QueryServiceDaoSupport {
-
-	//Velocity-Support-contextProperties-START
+	
 	@Value("#{contextProperties['pageSize'] ?: 10}")
 	int pageSize;
 
 	@Value("#{contextProperties['pageUnit'] ?: 10}")
 	int pageUnit;
-	//Velocity-Support-contextProperties-END
 
 	@Inject
 	public void setQueryService(QueryService queryService) {
@@ -48,22 +46,23 @@ public class DeptDao extends QueryServiceDaoSupport {
 	}
 
 	public int create(Dept dept) {
-		return super.create("flex.createDept", dept);
+		return create("flex.createDept", dept);
 	}
 
 	public List<Dept> getList(SearchVO searchVO) {
-		return super.findList("flex.find" + searchVO.getTableName() + "List",
-				searchVO);
+		List<Dept> results = this.findList("flex.find"
+				+ searchVO.getTableName() + "List", searchVO);
+		return results;
 	}
 
 	public Page getPagingList(SearchVO searchVO) {
 		int pageIndex = searchVO.getPageIndex();
-		return super.findListWithPaging("flex.find" + searchVO.getTableName()
+		return this.findListWithPaging("flex.find" + searchVO.getTableName()
 				+ "List", searchVO, pageIndex, pageSize, pageUnit);
 	}
 
 	public int remove(Dept dept) {
-		return super.remove("flex.removeDept", dept);
+		return remove("flex.removeDept", dept);
 	}
 
 	public Map<String, Integer> saveAll(List<Dept> list) {
@@ -92,17 +91,18 @@ public class DeptDao extends QueryServiceDaoSupport {
 		resultCount.put("INSERT", createRowCount);
 		resultCount.put("UPDATE", updateRowCount);
 		resultCount.put("DELETE", removeRowCount);
-
 		return resultCount;
 	}
 
 	public int update(Dept dept) {
-		return super.update("flex.updateDept", dept);
+		return update("flex.updateDept", dept);
 	}
 
 	public List<Dept> getTree(SearchVO searchVO) {
 		String queryId = StringUtil.nullToString(searchVO.getSearchCondition());
-		return super.findList("flex.find" + queryId + "List", searchVO);
+		List<Dept> results = this.findList("flex.find" + queryId + "List",
+				searchVO);
+		return results;
 	}
 
 }

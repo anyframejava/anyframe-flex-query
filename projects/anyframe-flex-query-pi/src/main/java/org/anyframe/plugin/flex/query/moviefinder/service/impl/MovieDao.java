@@ -39,27 +39,28 @@ public class MovieDao extends QueryServiceDaoSupport {
 
 	public void create(Movie movie) {
 		movie.setMovieId("MV-" + System.currentTimeMillis());
-		super.create("createFlexQueryMovie", movie);
+		create("createFlexQueryMovie", movie);
 	}
 
 	public void remove(String movieId) {
 		Movie movie = new Movie();
 		movie.setMovieId(movieId);
-		super.remove("removeFlexQueryMovie", movie);
+		remove("removeFlexQueryMovie", movie);
 	}
 
 	public void update(Movie movie) {
-		super.update("updateFlexQueryMovie", movie);
+		update("updateFlexQueryMovie", movie);
 	}
 
 	public Movie get(String movieId) {
 		Movie movie = new Movie();
 		movie.setMovieId(movieId);
-		return super.findByPk("findFlexQueryMovieByPk", movie);
+		return findByPk("findFlexQueryMovieByPk", movie);
 	}
 
 	public List<Movie> getList(Movie movie) {
-		return super.findList("findFlexQueryMovieList", movie);
+		List<Movie> results = this.findList("findFlexQueryMovieList", movie);
+		return results;
 	}
-
+	
 }

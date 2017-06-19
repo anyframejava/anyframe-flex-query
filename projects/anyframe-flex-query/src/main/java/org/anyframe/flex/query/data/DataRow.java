@@ -25,7 +25,7 @@ import flex.messaging.io.ObjectProxy;
 
 public class DataRow extends ObjectProxy implements Externalizable {
 
-	public String rowType;
+	public String ROWTYPE;
 
 	public DataRow() {
 	}
@@ -36,7 +36,7 @@ public class DataRow extends ObjectProxy implements Externalizable {
 	}
 
 	public DataRow(int initialCapacity) {
-		super(initialCapacity); 
+		super(initialCapacity);
 	}
 
 	public DataRow(int initialCapacity, float loadFactor) {
@@ -45,12 +45,12 @@ public class DataRow extends ObjectProxy implements Externalizable {
 
 	public void readExternal(ObjectInput in) throws IOException,
 			ClassNotFoundException {
-		this.rowType = (String) in.readObject();
+		this.ROWTYPE = (String) in.readObject();
 		super.readExternal(in);
 	}
 
 	public void writeExternal(ObjectOutput out) throws IOException {
-		out.writeObject(this.rowType);
+		out.writeObject(this.ROWTYPE);
 		super.writeExternal(out);
 	}
 }

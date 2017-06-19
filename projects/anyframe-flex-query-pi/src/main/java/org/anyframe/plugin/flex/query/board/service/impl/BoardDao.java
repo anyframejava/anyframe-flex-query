@@ -32,13 +32,11 @@ import org.springframework.stereotype.Repository;
 @Repository("boardDao")
 public class BoardDao extends QueryServiceDaoSupport {
 
-	//Velocity-Support-contextProperties-START
 	@Value("#{contextProperties['pageSize'] ?: 10}")
 	int pageSize;
 
 	@Value("#{contextProperties['pageUnit'] ?: 10}")
 	int pageUnit;
-	//Velocity-Support-contextProperties-END
 	
 	@Inject
 	public void setQueryService(QueryService queryService) {
@@ -46,21 +44,22 @@ public class BoardDao extends QueryServiceDaoSupport {
 	}
 
 	public int create(Board board) {
-		return super.create("flex.createBoard", board);
+		return create("flex.createBoard", board);
 	}
 
 	public List<Board> getList(SearchVO searchVO) {
-		return super.findList("flex.findBoardList", searchVO);
+		List<Board> results = this.findList("flex.findBoardList", searchVO);
+		return results;
 	}
 
 	public Page getPagingList(SearchVO searchVO) {
 		int pageIndex = searchVO.getPageIndex();
-		return super.findListWithPaging("flex.findBoardList", searchVO,
+		return this.findListWithPaging("flex.findBoardList", searchVO,
 				pageIndex, pageSize, pageUnit);
 	}
 
 	public int remove(Board board) {
-		return super.remove("flex.removeBoard", board);
+		return remove("flex.removeBoard", board);
 	}
 
 	public Map<String, Integer> saveAll(List<Board> list) {
@@ -89,12 +88,11 @@ public class BoardDao extends QueryServiceDaoSupport {
 		resultCount.put("INSERT", createRowCount);
 		resultCount.put("UPDATE", updateRowCount);
 		resultCount.put("DELETE", removeRowCount);
-		
 		return resultCount;
 	}
 
 	public int update(Board board) {
-		return super.update("flex.updateBoard", board);
+		return update("flex.updateBoard", board);
 	}
 	
 }

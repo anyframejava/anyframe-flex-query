@@ -40,7 +40,7 @@ public class CategoryServiceImpl implements CategoryService {
 	private CategoryDao categoryDao;
 
 	public List<Category> getTree(SearchVO searchVO) throws Exception {
-		return categoryDao.getTree(searchVO);
+		return this.categoryDao.getTree(searchVO);
 	}
 
 	public Page getPagingList(SearchVO searchVO) throws Exception {

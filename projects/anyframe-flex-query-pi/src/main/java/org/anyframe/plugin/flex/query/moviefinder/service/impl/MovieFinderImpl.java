@@ -40,7 +40,7 @@ public class MovieFinderImpl implements MovieFinder {
 	private MovieDao movieDao;
 
 	public List<Movie> getList(Movie movie) throws Exception {
-		return movieDao.getList(movie);
+		return (List<Movie>)this.movieDao.getList(movie);
 	}
 	
 }

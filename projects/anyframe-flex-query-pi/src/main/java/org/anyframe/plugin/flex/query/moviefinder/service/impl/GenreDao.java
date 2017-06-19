@@ -38,7 +38,9 @@ public class GenreDao extends QueryServiceDaoSupport {
 	}
 
 	public List<Genre> getList() {
-		return super.findList("findFlexQueryGenreList", new Object[] {});
+		List<Genre> results = this.findList("findFlexQueryGenreList",
+				new Object[] {});
+		return results;
 	}
 
 }
