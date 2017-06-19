@@ -4,8 +4,8 @@
     <groupId>org.anyframe.plugin</groupId>
     <artifactId>anyframe-flex-query-pi</artifactId>
     <packaging>war</packaging>
-    <version>1.0.0</version>
-    <name>flex-query</name>
+    <version>1.0.0.RC1</version>
+    <name>anyframe-flex-query-pi</name>
     <dependencies>
         <dependency>
             <groupId>org.springframework</groupId>
@@ -35,7 +35,7 @@
         <dependency>
             <groupId>org.anyframe</groupId>
             <artifactId>anyframe-core</artifactId>
-            <version>1.0.0</version>
+            <version>1.0.0.RC1</version>
         </dependency>
         <dependency>
             <groupId>org.hibernate</groupId>
@@ -209,7 +209,7 @@
         <dependency>
             <groupId>org.anyframe</groupId>
             <artifactId>anyframe-query</artifactId>
-            <version>1.0.0</version>
+            <version>1.0.0.RC1</version>
         </dependency>
         <dependency>
             <groupId>avalon</groupId>
@@ -219,7 +219,7 @@
         <dependency>
             <groupId>org.anyframe</groupId>
             <artifactId>anyframe-flex-query</artifactId>
-            <version>1.0.0</version>
+            <version>1.0.0.RC1</version>
         </dependency>
         <dependency>
 			<groupId>ant</groupId>
@@ -318,7 +318,7 @@
             <plugin>
                 <groupId>org.codehaus.mojo</groupId>
                 <artifactId>anyframe-maven-plugin</artifactId>
-                <version>2.0.0</version>
+                <version>2.0.0.RC1</version>
                 <dependencies>
                     <dependency>
                         <groupId>hsqldb</groupId>

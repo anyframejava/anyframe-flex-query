@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="UTF-8" ?>
-<plugin name="flex-query" description="Flex-Query Plugin consists of BlazeDS installation for communicating Flex Client and Server, and libraries and configuration file for integrating Spring to BlazeDS.">
+<plugin name="flex-query">
 	<groupId>org.anyframe.plugin</groupId>
 	<artifactId>anyframe-flex-query-pi</artifactId>
-	<version>1.0.0</version>
+	<version>1.0.0.RC1</version>
 	<dependent-plugins>
 		<dependent-plugin name="query" version="2.0.0&gt;*" />
 	</dependent-plugins>

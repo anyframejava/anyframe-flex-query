@@ -13,7 +13,7 @@
 <!-- Top -->
   <tr>
     <td height="100%" align="left" valign="middle">
-		<font size="5">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Anyframe Java 5.0.0</font>
+		<font size="5">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Anyframe Java 5.0.0.RC1</font>
     </td>
   </tr>
 </table>
@@ -32,7 +32,7 @@
 <!--Add new menu here-->
 <!--flex-query-menu-START-->
 <a href="javascript:openFlexWindows();">
-    <font size="2">- Flex UI Sample 1.0.0</font>
+    <font size="2">- Flex UI Sample 1.0.0.RC1</font>
 </a>
 <script type="text/javascript">
 			function openFlexWindows(){

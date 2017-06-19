@@ -27,44 +27,38 @@ import org.anyframe.pagination.Page;
 
 /**
  * 
- * @author Jonghoon, Kim
+ * @author Jonghoon, Kim 
  * 
  */
-public class FlexServiceImpl implements FlexService {
+public class FlexServiceImpl implements FlexService{
 
 	protected FlexDao flexDao;
-
+	
 	public void setFlexDao(FlexDao flexDao) {
 		this.flexDao = flexDao;
 	}
 
 	public int create(FlexDataGrid flexBaseObject) throws Exception {
-
 		return flexDao.create(flexBaseObject);
 	}
 
 	public List getList(FlexSearchVO searchVO) throws Exception {
-
 		return flexDao.getList(searchVO);
 	}
 
 	public Page getPagingList(FlexSearchVO searchVO) throws Exception {
-
 		return flexDao.getPagingList(searchVO);
 	}
 
 	public int remove(FlexDataGrid flexBaseObject) throws Exception {
-
 		return flexDao.remove(flexBaseObject);
 	}
 
 	public Map saveAll(ArrayList arrayList) throws Exception {
-
 		return flexDao.saveAll(arrayList);
 	}
 
 	public int update(FlexDataGrid flexBaseObject) throws Exception {
-
 		return flexDao.update(flexBaseObject);
 	}
 }

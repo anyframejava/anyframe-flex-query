@@ -4,7 +4,7 @@ anyframe.home=
 #=== Project Information ====
 project.name=anyframe-flex-query-pi
 project.home=C:\\workspace\\20110316-flex\\anyframe-flex-query-pi
-project.version=1.0.0
+project.version=1.0.0.RC1
 project.type=web
 project.build=maven
 project.template.home=C:\\Documents and Settings\\XPMUser\\.anyframe\\templates
