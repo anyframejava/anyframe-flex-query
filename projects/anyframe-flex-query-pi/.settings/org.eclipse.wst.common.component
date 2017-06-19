@@ -3,7 +3,7 @@
 <wb-module deploy-name="anyframe-flex-query-pi">
 <wb-resource deploy-path="/WEB-INF/classes" source-path="/src/main/java"/>
 <wb-resource deploy-path="/WEB-INF/classes" source-path="/src/main/resources"/>
-<wb-resource deploy-path="/" source-path="/src/main/webapp"/>
+        <wb-resource deploy-path="/" source-path="/src/main/webapp"/>
 <property name="java-output-path"/>
 <property name="context-root" value="anyframe-flex-query-pi"/>
 </wb-module>

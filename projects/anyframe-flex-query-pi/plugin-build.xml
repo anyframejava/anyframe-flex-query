@@ -1,10 +1,11 @@
 <?xml version="1.0" encoding="UTF-8" ?>
-<plugin name="flex-query">
+<plugin name="flex-query" description="Flex-Query Plugin consists of BlazeDS installation for communicating Flex Client and Server, and libraries and configuration file for integrating Spring to BlazeDS.">
 	<groupId>org.anyframe.plugin</groupId>
 	<artifactId>anyframe-flex-query-pi</artifactId>
-	<version>1.0.0.RC1</version>
+	<version>1.1.0</version>
 	<dependent-plugins>
 		<dependent-plugin name="query" version="2.0.0&gt;*" />
+		<dependent-plugin name="fileupload" version="2.0.0&gt;*" />
 	</dependent-plugins>
 	<resources>
 		<resource dir="src/main/java" filtered="true" packaged="true">
@@ -21,22 +22,26 @@
 		</resource>
 		<resource dir="src/main/webapp/flex" filtered="false"
 			packaged="false">
-			<exclude name="**/**/Main.swf" />
+			<exclude name="**/**/*.swf" />
 			<include name="**/**/*.*" />
 		</resource>
+		<resource dir="src/main/webapp/flex/uisample/assets" filtered="false"
+				packaged="false">
+				<include name="**/**/*.*" />
+		</resource>		
 		<resource dir="src/main/webapp/WEB-INF/jsp" filtered="false"
 			packaged="false">
 			<include name="**/*.jsp" />
 		</resource>
 		<resource dir="src/main/webapp/WEB-INF/flex/pjt" filtered="true"
 			packaged="false">
-			<include name="**/src/samples/**/*.mxml" />
-			<include name="**/src/samples/**/*.as" />
+			<include name="**/src/**/*.mxml" />
+			<include name="**/src/**/*.as" />
 		</resource>
 		<resource dir="src/main/webapp/WEB-INF/flex" filtered="false"
 			packaged="false">
-			<exclude name="**/src/samples/**/*.mxml" />
-			<exclude name="**/src/samples/**/*.as" />
+			<exclude name="**/src/**/*.mxml" />
+			<exclude name="**/src/**/*.as" />
 		</resource>
 		<resource dir="db" filtered="false" packaged="false">
 			<include name="**/*.sql" />
@@ -50,6 +55,8 @@
 			<fileset dir="src/main/resources" filtered="true" packaged="false">
 				<include name="**/spring/*flex*.xml" />
 				<include name="**/spring/context-transaction.xml" />
+				<include name="**/spring/context-jms.xml" />
+				<include name="**/spring/context-scheduling-trigger.xml" />
 				<include name="**/sql/**/*-flex-query-*.xml" />
 			</fileset>
 			<fileset dir="src/main/webapp" filtered="false" packaged="false">
@@ -58,7 +65,11 @@
 			</fileset>
 			<fileset dir="src/main/webapp/flex" filtered="false"
 				packaged="false">
-				<exclude name="**/**/Main.swf" />
+				<exclude name="**/**/*.swf" />
+				<include name="**/**/*.*" />
+			</fileset>
+			<fileset dir="src/main/webapp/flex/uisample/assets" filtered="false"
+				packaged="false">
 				<include name="**/**/*.*" />
 			</fileset>
 			<fileset dir="src/main/webapp/WEB-INF" filtered="true"
@@ -71,13 +82,13 @@
 			</fileset>
 			<fileset dir="src/main/webapp/WEB-INF/flex/pjt" filtered="true"
 				packaged="false">
-				<include name="**/src/samples/**/*.mxml" />
-				<include name="**/src/samples/**/*.as" />
+				<include name="**/src/**/*.mxml" />
+				<include name="**/src/**/*.as" />
 			</fileset>
 			<fileset dir="src/main/webapp/WEB-INF/flex" filtered="false"
 				packaged="false">
-				<exclude name="**/src/samples/**/*.mxml" />
-				<exclude name="**/src/samples/**/*.as" />
+				<exclude name="**/src/**/*.mxml" />
+				<exclude name="**/src/**/*.as" />
 			</fileset>
 			<fileset dir="db" filtered="false" packaged="false">
 				<include name="**/*.sql" />

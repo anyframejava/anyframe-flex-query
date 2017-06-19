@@ -18,8 +18,6 @@ package org.anyframe.plugin.flex.query.domain;
 import java.io.Serializable;
 import java.util.List;
 
-import org.anyframe.flex.query.domain.FlexDataGrid;
-
 /**
  * This Dept class is a Value Object class for Dept domain.
  * 

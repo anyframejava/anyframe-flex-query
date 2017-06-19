@@ -16,49 +16,136 @@
 package org.anyframe.flex.query.service.impl;
 
 import java.util.ArrayList;
+import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
 
 import org.anyframe.flex.query.dao.FlexDao;
-import org.anyframe.flex.query.domain.FlexDataGrid;
-import org.anyframe.flex.query.service.FlexSearchVO;
+import org.anyframe.flex.query.data.DataRow;
+import org.anyframe.flex.query.data.DataSet;
 import org.anyframe.flex.query.service.FlexService;
-import org.anyframe.pagination.Page;
 
-/**
- * 
- * @author Jonghoon, Kim 
- * 
- */
-public class FlexServiceImpl implements FlexService{
 
-	protected FlexDao flexDao;
+public class FlexServiceImpl implements FlexService {
+
+	private FlexDao flexDao;
 	
 	public void setFlexDao(FlexDao flexDao) {
 		this.flexDao = flexDao;
 	}
 
-	public int create(FlexDataGrid flexBaseObject) throws Exception {
-		return flexDao.create(flexBaseObject);
+	public List findList(List dataSetList, Map param) throws Exception 
+			{
+		for(int i=0; i < dataSetList.size() ; i++){
+			DataSet ds = (DataSet)dataSetList.get(i);
+
+			String queryId = ds.selectQueryId;
+
+			ds.addAll(flexDao.getList(queryId, param));
+		}
+		return dataSetList;
+	}
+	
+	public Map saveAll(List dataSetList, Map param) throws Exception {
+		
+		Map result = new LinkedHashMap();
+		
+		for(int i=0; i<dataSetList.size(); i++) {
+			
+			DataSet ds = (DataSet)dataSetList.get(i);
+			
+			for(int cnt=0; cnt<ds.size(); cnt++) {
+				DataRow dr = (DataRow)ds.get(cnt); 
+				
+				if(dr.ROWTYPE.equals("D")) {
+					String queryId = ds.deleteQueryId;
+					int deleteCnt = flexDao.delete(queryId, dr, param);
+					if(result.containsKey(queryId)) {
+						deleteCnt += ((Integer)result.get(queryId)).intValue();
+					}
+					result.put(queryId, deleteCnt);
+				}
+			}
+			
+			for(int cnt=0; cnt<ds.size(); cnt++) {
+				DataRow dr = (DataRow)ds.get(cnt); 
+				if(dr.ROWTYPE.equals("I")) {
+					String queryId = ds.insertQueryId;
+					Object generatedKey = flexDao.create(queryId, dr, param);
+					int insertCnt = 1;
+					if(result.containsKey(queryId)) {
+						insertCnt += ((Integer)result.get(queryId)).intValue();
+					}
+					result.put(queryId, insertCnt);
+					
+					if(generatedKey != null) {
+						if(result.containsKey("generatedKeys")) {
+							List generatedKeys = (List) result.get("generatedKeys");
+							generatedKeys.add(generatedKey);
+						} else {
+							List generatedKeys = new ArrayList();
+							generatedKeys.add(generatedKey);
+							result.put("generatedKeys", generatedKeys);
+						}
+					}
+					
+				}else if(dr.ROWTYPE.equals("U")) {
+					String queryId = ds.updateQueryId;
+					int updateCnt = flexDao.update(queryId, dr, param);
+					if(result.containsKey(queryId)) {
+						updateCnt += ((Integer)result.get(queryId)).intValue();
+					}
+					result.put(queryId, updateCnt);
+				}
+			}
+		}
+		return result;
+	}
+	
+	public Map find(String queryId, DataRow dataRow, Map param) throws Exception {
+		Map result = new LinkedHashMap();
+		ArrayList resultList = (ArrayList) flexDao.getList(queryId, dataRow, param);
+		return (Map)resultList.get(0);
+	}
+	
+	public Map create(String queryId, DataRow dataRow, Map param)
+			throws Exception {
+		Map result = new LinkedHashMap();
+
+		Object generatedKey = flexDao.create(queryId, dataRow, param);
+		int insertCnt = 1;
+		if (result.containsKey(queryId)) {
+			insertCnt += ((Integer) result.get(queryId)).intValue();
+		}
+		result.put(queryId, insertCnt);
+
+		return result;
+	}
+	
+	public Map update(String queryId, DataRow dataRow, Map param )throws Exception{
+		Map result = new LinkedHashMap();
+
+		Object generatedKey = flexDao.update(queryId, dataRow, param);
+		int insertCnt = 1;
+		if (result.containsKey(queryId)) {
+			insertCnt += ((Integer) result.get(queryId)).intValue();
+		}
+		result.put(queryId, insertCnt);
+
+		return result;
+	}
+	
+	public Map remove(String queryId, DataRow dataRow, Map param )throws Exception{
+		Map result = new LinkedHashMap();
+
+		Object generatedKey = flexDao.delete(queryId, dataRow, param);
+		int insertCnt = 1;
+		if (result.containsKey(queryId)) {
+			insertCnt += ((Integer) result.get(queryId)).intValue();
+		}
+		result.put(queryId, insertCnt);
+
+		return result;
 	}
 
-	public List getList(FlexSearchVO searchVO) throws Exception {
-		return flexDao.getList(searchVO);
-	}
-
-	public Page getPagingList(FlexSearchVO searchVO) throws Exception {
-		return flexDao.getPagingList(searchVO);
-	}
-
-	public int remove(FlexDataGrid flexBaseObject) throws Exception {
-		return flexDao.remove(flexBaseObject);
-	}
-
-	public Map saveAll(ArrayList arrayList) throws Exception {
-		return flexDao.saveAll(arrayList);
-	}
-
-	public int update(FlexDataGrid flexBaseObject) throws Exception {
-		return flexDao.update(flexBaseObject);
-	}
 }

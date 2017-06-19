@@ -15,86 +15,97 @@
  */
 package org.anyframe.flex.query.service;
 
-import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 
-import org.anyframe.flex.query.domain.FlexDataGrid;
-import org.anyframe.pagination.Page;
-
+import org.anyframe.flex.query.data.DataRow;
 
 /**
  * This interface is a common biz. service in developing the
- * presentation layer using Flex which is the RIA solution of Adobe.
+ * presentation layer using Flex which is the RIA solution of the
+ * Adobe.
  * @author Jonghoon, Kim
  *
  */
 public interface FlexService {
-	 
+	
 	/**
-     * This is a method for querying using the FlexSearchVO for paging
-     * @param searchVO
-	 * 		The value object including table name, page index, page unit, and search condition, search keyword.
-	 * @return	result page object with total count  
+	 * This is a method for querying at developing the
+     * screen using RIA
+	 * @param dataSetList
+	 * 		The Dataset list including the query id or query condition etc.
+	 * @param param
+	 * 		param including query condition.
+	 * @throws Exception
+	 *		if there is any problem executing the query
+     */ 
+	public List findList(List dataSetList, Map param) throws Exception ;
+	
+	/**
+     * This is the method for inserting, updating and deleting using DataSet.
+     * @param dataSetList
+	 * 		The Dataset list including query conditions
+	 * @param param
+	 * 		param including query condition.
 	 * @throws Exception
 	 *		if there is any problem executing the
 	 *		query
      */   
-	Page getPagingList(FlexSearchVO searchVO) throws Exception;
+	public Map saveAll(List dataSetList, Map param) throws Exception ;
 	
 	/**
-     * This is a method for querying using the FlexSearchVO for list
-     * @param searchVO
-	 * 		The value object including table name, search condition and search keyword.
-	 * @return	result list object with total count  
-	 * @throws Exception
-	 *		if there is any problem executing the
-	 *		query
-     */    
-	List getList(FlexSearchVO searchVO) throws Exception;
-	
-	/**
-     * This is a method for querying using the FlexBaseObject for create
-     * @param flexBaseObject
-	 * 		FlexBaseObject including row status.
-	 * @return	row count of success insert. 
-	 * @throws Exception
-	 *		if there is any problem executing the
-	 *		query
-     */    
-	int create(FlexDataGrid flexBaseObject) throws Exception;
-	
-	/**
-     * This is a method for querying using the FlexBaseObject for update
-     * @param flexBaseObject
-	 * 		FlexBaseObject including row status.
-	 * @return	row count of success update. 
+     * This is the method for inquiring using DataSet.
+     * @param queryId
+	 * 		identifier of query statement to execute
+	 * @param dataRow
+	 * 		The Datarow including query condition
+	 * @param param
+	 * 		param including query condition.
 	 * @throws Exception
 	 *		if there is any problem executing the
 	 *		query
      */  
-	int update(FlexDataGrid flexBaseObject) throws Exception;
+	public Map find(String queryId, DataRow dataRow, Map param )throws Exception;
 	
 	/**
-     * This is a method for querying using the FlexBaseObject for remove
-     * @param flexBaseObject
-	 * 		FlexBaseObject including row status.
-	 * @return row count of success remove. 
+     * This is a method for querying using the Dataset for insert.
+     * @param queryId
+	 * 		identifier of query statement to execute
+	 * @param dataRow
+	 * 		The Datarow including query condition
+	 * @param param
+	 * 		param including query condition.
 	 * @throws Exception
 	 *		if there is any problem executing the
 	 *		query
-     */  
-	int remove(FlexDataGrid flexBaseObject) throws Exception;
+     */     
+	public Map create(String queryId, DataRow dataRow, Map param )throws Exception;
 	
 	/**
-     * This is a method for querying using the FlexBaseObject for insert, update, remove
-     * @param flexBaseObject
-	 * 		FlexBaseObject including row status.
-	 * @return Map row count of success query. 
+     * This is the method for updating using VariableList and Dataset.
+     * @param queryId
+	 * 		identifier of query statement to execute
+	 * @param dataRow
+	 * 		The Datarow including query condition
+	 * @param param
+	 * 		param including query condition.
 	 * @throws Exception
 	 *		if there is any problem executing the
 	 *		query
-     */ 
-	Map saveAll(ArrayList arrayList) throws Exception;
+     */    
+	public Map update(String queryId, DataRow dataRow, Map param )throws Exception;
 	
+	/**
+     * This is the method for deleting using VariableList and Dataset.
+     * @param queryId
+	 * 		identifier of query statement to execute
+	 * @param dataRow
+	 * 		The Datarow including query condition
+	 * @param param
+	 * 		param including query condition.
+	 * @throws Exception
+	 *		if there is any problem executing the
+	 *		query
+     */     
+	public Map remove(String queryId, DataRow dataRow, Map param )throws Exception;
 }

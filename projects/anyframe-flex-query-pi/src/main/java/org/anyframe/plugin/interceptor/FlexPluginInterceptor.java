@@ -31,29 +31,48 @@ public class FlexPluginInterceptor {
 			
 			String appRoot = baseDir + "/src/main/webapp";
 			String fdkHome = appRoot + "/WEB-INF/flex/fdk";
-			String flexSrc = appRoot + "/WEB-INF/flex/pjt/src";
-			String mainFileName = flexSrc + "/Main.mxml";
-			String swfFileName = appRoot + "/flex/Main.swf";
 			String serviceName = appRoot + "/WEB-INF/flex/services-config.xml";
 			
-			Project project = new Project();
-			project.setBasedir(".");
-			project.setName("anyframe flex ui sample");
-			project.setProperty("FLEX_HOME", fdkHome );
+			String[] arrFlexSrc = { "chat" , "collaboration", "companymgr", "fileupload", "httpservice", "insync01", 
+					"insync02", "insync03", "insync04", "insync05", "insync06", "jmspush", "moviefinder", "uisample" };
 			
-			Target target = new Target();
-			target.setName("compile");
-			target.setProject(project);
-						
-			MxmlcTask mxmlcTask = new MxmlcTask();
-			mxmlcTask.setProject(project);
-			mxmlcTask.init();
-			mxmlcTask.setFile(mainFileName);
-			mxmlcTask.setOutput(swfFileName);
-			mxmlcTask.setDynamicAttribute("actionscript-file-encoding", "UTF-8");
-			mxmlcTask.setDynamicAttribute("services", serviceName);
-			mxmlcTask.setDynamicAttribute("context-root", contextRoot );
-			mxmlcTask.execute();
+			String[] arrMainFileName = {"chat.mxml" , "collaboration.mxml", "companymgr.mxml", "fileupload.mxml", "httpservice.mxml", "insync01.mxml", 
+					"insync02.mxml", "insync03.mxml", "insync04.mxml", "insync05.mxml", "insync06.mxml", "jmspush.mxml", "moviefinder.mxml", "Main.mxml"};
+			
+			String[] arrSwfFileName = {"chat.swf" , "collaboration.swf", "companymgr.swf", "fileupload.swf", "httpservice.swf", "insync01.swf", 
+					"insync02.swf", "insync03.swf", "insync04.swf", "insync05.swf", "insync06.swf", "jmspush.swf", "moviefinder.swf", "Main.swf"};
+			
+			String flexSrc = "";
+			String mainFileName = "";
+			String swfFileName = "";
+			
+			for( int i = 0 ; i < arrFlexSrc.length ; i ++ ){
+				MxmlcTask mxmlcTask = new MxmlcTask();
+				
+				flexSrc = appRoot + "/WEB-INF/flex/pjt/" + arrFlexSrc[i] + "/src";
+				mainFileName = flexSrc + "/" + arrMainFileName[i];
+				swfFileName = appRoot + "/flex/"+ arrFlexSrc[i] + "/" + arrSwfFileName[i];
+				
+				Project project = new Project();
+				project.setBasedir(".");
+				project.setName("anyframe flex ui sample");
+				project.setProperty("FLEX_HOME", fdkHome );
+				
+				Target target = new Target();
+				target.setName("compile");
+				target.setProject(project);
+				
+				mxmlcTask.setProject(project);
+				mxmlcTask.init();
+				mxmlcTask.setFile(mainFileName);
+				mxmlcTask.setOutput(swfFileName);
+				mxmlcTask.setDynamicAttribute("actionscript-file-encoding", "UTF-8");
+				mxmlcTask.setDynamicAttribute("services", serviceName);
+				mxmlcTask.setDynamicAttribute("context-root", contextRoot );	
+				mxmlcTask.execute();
+				
+				mxmlcTask.clearArgs();
+			}
 		}catch(Exception e){
 			e.printStackTrace();
 			log

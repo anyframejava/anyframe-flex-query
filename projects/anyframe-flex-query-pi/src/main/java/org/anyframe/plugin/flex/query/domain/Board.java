@@ -17,8 +17,6 @@ package org.anyframe.plugin.flex.query.domain;
 
 import java.io.Serializable;
 
-import org.anyframe.flex.query.domain.FlexDataGrid;
-
 /**
  * This Board class is a Value Object class for Board domain.
  * 

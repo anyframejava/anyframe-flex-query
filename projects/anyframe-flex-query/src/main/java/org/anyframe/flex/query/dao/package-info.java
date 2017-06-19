@@ -14,11 +14,11 @@
  * limitations under the License.
  */
 /**
- * This interface help to use anyframe.core.query.QueryService more easy. 
+ * This interface help to use org.anyframe.query.QueryService more easy. 
  * this interface is including method to select, insert, update, delete, and save 
- * to database using FlexBalseObject
+ * to database using DataSet
  * 
- * @since 4.0.1 
+ * @since 5.0.1 
  */
 package org.anyframe.flex.query.dao;
 

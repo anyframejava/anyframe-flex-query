@@ -15,17 +15,17 @@
  */
 package org.anyframe.plugin.flex.query.category.service.impl;
 
+import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
 
-import javax.annotation.PostConstruct;
 import javax.inject.Inject;
 import javax.inject.Named;
 
-import org.anyframe.flex.query.service.FlexSearchVO;
-import org.anyframe.flex.query.service.impl.FlexServiceImpl;
-import org.anyframe.plugin.flex.query.category.dao.CategoryDao;
+import org.anyframe.pagination.Page;
 import org.anyframe.plugin.flex.query.category.service.CategoryService;
 import org.anyframe.plugin.flex.query.domain.Category;
+import org.anyframe.plugin.flex.query.domain.SearchVO;
 import org.springframework.flex.remoting.RemotingDestination;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Propagation;
@@ -34,18 +34,33 @@ import org.springframework.transaction.annotation.Transactional;
 @Service("categoryService")
 @RemotingDestination
 @Transactional(rollbackFor = { Exception.class }, propagation = Propagation.REQUIRED)
-public class CategoryServiceImpl extends FlexServiceImpl implements CategoryService {
+public class CategoryServiceImpl implements CategoryService {
 	
 	@Inject
 	@Named("categoryDao")
 	private CategoryDao categoryDao;
 
-	@PostConstruct
-	public void init() {
-		setFlexDao(categoryDao);
+	public List<Category> getTree(SearchVO searchVO) throws Exception {
+		return this.categoryDao.getTree(searchVO);
 	}
 
-	public List<Category> getTree(FlexSearchVO searchVO) throws Exception {
-		return this.categoryDao.getTree(searchVO);
+	public Page getPagingList(SearchVO searchVO) throws Exception {
+		return categoryDao.getPagingList(searchVO);
+	}
+
+	public int create(Category category) throws Exception {
+		return categoryDao.create(category);
+	}
+
+	public int update(Category category) throws Exception {
+		return categoryDao.update(category);
+	}
+
+	public int remove(Category category) throws Exception {
+		return categoryDao.remove(category);
+	}
+
+	public Map saveAll(ArrayList arrayList) throws Exception {
+		return categoryDao.saveAll(arrayList);
 	}
 }

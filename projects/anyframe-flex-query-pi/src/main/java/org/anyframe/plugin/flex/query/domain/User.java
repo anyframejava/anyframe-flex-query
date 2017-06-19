@@ -17,8 +17,6 @@ package org.anyframe.plugin.flex.query.domain;
 
 import java.io.Serializable;
 
-import org.anyframe.flex.query.domain.FlexDataGrid;
-
 /**
  * This User class is a Value Object class for User domain.
  * 

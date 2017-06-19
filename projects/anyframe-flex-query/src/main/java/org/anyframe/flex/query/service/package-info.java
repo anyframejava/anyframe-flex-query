@@ -17,7 +17,7 @@
  * This interface is a common biz. service in developing the
  * presentation layer using Flex which is the RIA solution of Abobe.
  * 
- * @since 4.0.1 
+ * @since 5.0.1 
  */
 package org.anyframe.flex.query.service;
 

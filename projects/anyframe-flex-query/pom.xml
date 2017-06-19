@@ -11,21 +11,20 @@
 	</parent>
 	<groupId>org.anyframe</groupId>
 	<artifactId>anyframe-flex-query</artifactId>
-	<version>1.0.0.RC1</version>	
+	<version>1.1.0</version>	
 	<packaging>jar</packaging>	
   
 	<dependencies>
 		<dependency>
 			<groupId>org.anyframe</groupId>
 			<artifactId>anyframe-core</artifactId>
-			<version>1.0.0.RC1</version>
+			<version>1.0.1</version>
 		</dependency>	
 		<dependency>
 			<groupId>org.anyframe</groupId>
 			<artifactId>anyframe-query</artifactId>
-			<version>1.0.0.RC1</version>
+			<version>1.1.1</version>
 		</dependency>
-		
 		<dependency>
 			<groupId>org.springframework</groupId>
 			<artifactId>spring-beans</artifactId>
@@ -34,6 +33,31 @@
 			<groupId>org.springframework.flex</groupId>
 			<artifactId>spring-flex</artifactId>
 			<version>1.0.3.RELEASE</version>
+		</dependency>
+		<dependency>
+			<groupId>flex</groupId>
+			<artifactId>messaging-common</artifactId>
+			<version>4.0.0.14931</version>
+		</dependency>
+		<dependency>
+			<groupId>flex</groupId>
+			<artifactId>messaging-core</artifactId>
+			<version>4.0.0.14931</version>
+		</dependency>
+		<dependency>
+			<groupId>flex</groupId>
+			<artifactId>messaging-opt</artifactId>
+			<version>4.0.0.14931</version>
+		</dependency>
+		<dependency>
+			<groupId>flex</groupId>
+			<artifactId>messaging-proxy</artifactId>
+			<version>4.0.0.14931</version>
+		</dependency>
+		<dependency>
+			<groupId>flex</groupId>
+			<artifactId>messaging-remoting</artifactId>
+			<version>4.0.0.14931</version>
 		</dependency>
 	</dependencies>
 </project>

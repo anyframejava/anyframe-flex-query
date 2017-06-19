@@ -15,13 +15,27 @@
  */
 package org.anyframe.plugin.flex.query.dept.service;
 
+import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
 
-import org.anyframe.flex.query.service.FlexSearchVO;
-import org.anyframe.flex.query.service.FlexService;
+import org.anyframe.pagination.Page;
 import org.anyframe.plugin.flex.query.domain.Dept;
+import org.anyframe.plugin.flex.query.domain.SearchVO;
 
-public interface DeptService extends FlexService{
+public interface DeptService {
+
+	Page getPagingList(SearchVO searchVO) throws Exception;
+
+	List<Dept> getTree(SearchVO searchVO) throws Exception;
+
+	int create(Dept dept) throws Exception;
+
+	int update(Dept dept) throws Exception;
+
+	int remove(Dept dept) throws Exception;
+
+	Map saveAll(ArrayList arrayList) throws Exception;
 	
-	List<Dept> getTree(FlexSearchVO searchVO) throws Exception;
+	List getList(SearchVO searchVO) throws Exception;
 }
